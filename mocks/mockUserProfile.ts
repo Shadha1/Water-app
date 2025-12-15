@@ -4,19 +4,21 @@
 
 export type ActivityLevel = 'low' | 'moderate' | 'high';
 export type Climate = 'cold' | 'temperate' | 'hot';
+export type Gender = 'male' | 'female';
 
 export interface UserProfileInput {
   weightKg: number;
   ageYears: number;
+  gender: Gender;     // statt sex
   activityLevel: ActivityLevel;
   climate: Climate;
-  avgTemperatureC?: number;
 }
+
 
 export const mockUserProfile: UserProfileInput = {
   weightKg: 72,
   ageYears: 30,
+  gender: "male",
   activityLevel: 'moderate',
   climate: 'temperate',
-  avgTemperatureC: 21,
 };
