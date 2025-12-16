@@ -8,8 +8,10 @@ import { Gender, UserProfileInput } from '../../mocks/mockUserProfile';
 export function getGenderValue(gender: Gender): number {
   if (gender === 'male') {
     return 35;
-  } else {
+  }else if(gender === 'female') {
     return 31;
+  } else {
+    return 33;
   }
 }
 
