@@ -2,7 +2,8 @@
 
 
 
-import { Gender, UserProfileInput } from '../../mocks/mockUserProfile';
+import type { Gender, UserProfileInput } from '@/constants/water-core/userProfile';
+
 
 // Gender bestimmen
 export function getGenderValue(gender: Gender): number {
@@ -73,9 +74,10 @@ export function getClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
 
   const totalMl =
     baseMl +  ageValue + activityMultiplier + climateMultiplier ;
-    const roundedMl = Math.round(totalMl);
+    const roundedMl = Math.round(totalMl / 100) * 100;
 
   return roundedMl;
   }
+  
 
 
