@@ -36,7 +36,7 @@ const Index = () => {
   const saveData = () => {
     setName(name);
     handleConfirm(name, gender, age, weight);
-    router.replace("/home");
+    router.replace("/(tabs)/home");
   };
 
   return (
@@ -54,7 +54,6 @@ const Index = () => {
             <Picker.Item label="Select gender" value="" />
             <Picker.Item label="Male" value="male" />
             <Picker.Item label="Female" value="female" />
-            <Picker.Item label="Other" value="other" />
           </Picker>
         </View>
 
