@@ -153,9 +153,10 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontFamily: "serif", // Jacques Francois Shadow real
     textAlign: "center",
-    color: "#27598E",
+    color: "#27598E",//#D6E4E5
+
     marginBottom: 30,
-    textShadowColor: "#000000",//sombra
+    textShadowColor: "#00001c",//sombra
     textShadowOffset: { width: 1, height: 0 },
     textShadowRadius: 1,
   },
