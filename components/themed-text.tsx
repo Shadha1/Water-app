@@ -1,6 +1,5 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
-import { useThemeColor } from '@/hooks/use-theme-color';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -15,7 +14,7 @@ export function ThemedText({
   type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = '#27598E';//useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return (
     <Text
@@ -35,26 +34,31 @@ export function ThemedText({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 24, // antes 16
+    lineHeight: 24, //tal vez 32
+    fontFamily: 'serif',   // esto hace que sea tipo Jacques François
   },
   defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 24, //antes 16
+    lineHeight: 24, //tal vez 32
     fontWeight: '600',
+    fontFamily: 'serif',   // esto hace que sea tipo Jacques François
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    lineHeight: 32,
+    lineHeight: 32, //tal vez 40
+    fontFamily: 'serif',   // esto hace que sea tipo Jacques François
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 24, //antes 20
     fontWeight: 'bold',
+    fontFamily: 'serif',   // esto hace que sea tipo Jacques François
   },
   link: {
-    lineHeight: 30,
-    fontSize: 16,
+    lineHeight: 24, //antes 30
+    fontSize: 16, //tal vez 32
     color: '#0a7ea4',
+    fontFamily: 'serif',   // esto hace que sea tipo Jacques François
   },
 });
