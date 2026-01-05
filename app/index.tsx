@@ -50,6 +50,9 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
+
+      <Text style={styles.title}>WaterMe</Text>
+
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
         <TextInput style={styles.input} value={name} onChangeText={setName} />
@@ -59,10 +62,11 @@ const Index = () => {
           <Picker
             selectedValue={gender}
             onValueChange={(itemValue) => setGender(itemValue)}
+            style={{ color: "#27598E" }} // Mica
           >
-            <Picker.Item label="Select gender" value="" />
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
+            <Picker.Item label="Select gender" value="" color="#27598E" />
+            <Picker.Item label="Male" value="male" color="#27598E" />
+            <Picker.Item label="Female" value="female" color="#27598E" />
           </Picker>
         </View>
 
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     marginBottom: 4,
-    color: "#2c5f7c",
+    color: "#27598E",//"#2c5f7c",
   },
   input: {
     backgroundColor: "#fff",
@@ -127,17 +131,33 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#ccc",
+    //Mica:
+    fontSize: 20,
+    fontFamily: "sans-serif", //"Inder"
+    color: "#27598E",
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#2c5f7c",
+    backgroundColor: "#27598E",//"#2c5f7c",
     paddingVertical: 12,
     borderRadius: 20,
     alignItems: "center",
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 20,//16,
+    fontFamily: "sans-serif",
+    fontWeight: "600", //needed?
   },
+  title: {
+    fontSize: 40,
+    fontFamily: "serif", // Jacques Francois Shadow real
+    textAlign: "center",
+    color: "#27598E",
+    marginBottom: 30,
+    textShadowColor: "#000000",//sombra
+    textShadowOffset: { width: 1, height: 0 },
+    textShadowRadius: 1,
+  },
+
 });
