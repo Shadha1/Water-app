@@ -6,6 +6,7 @@
 //import { Link } from "expo-router";
 
 //Mica:
+import { Image } from "react-native";
 //Shadha:
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
@@ -50,6 +51,11 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/gif_standard.gif")}
+        style={styles.gif}
+      />
+
 
       <Text style={styles.title}>WaterMe</Text>
 
@@ -161,6 +167,13 @@ const styles = StyleSheet.create({
     textShadowColor: "#00001c",//sombra
     textShadowOffset: { width: 1, height: 0 },
     textShadowRadius: 1,
+  },
+  gif: {
+    position: "absolute", //así no afecta lo demás
+    top: 20,        // ajustar según notch. Mas pequeno, más pegado al borde.
+    left: 10,
+    width: 100,
+    height: 100,
   },
 
 });
