@@ -1,17 +1,10 @@
-//Before:
-//import { Image } from "expo-image";
-//import { Platform, StyleSheet } from "react-native";
-//import { HelloWave } from "@/components/hello-wave";
-//import ParallaxScrollView from "@/components/parallax-scroll-view";
-//import { Link } from "expo-router";
 
-//Mica:
-//import { Image } from "react-native";
 //Shadha:
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import React, { useState } from "react";
+//I need:
 import {
   Alert,
   Image,
