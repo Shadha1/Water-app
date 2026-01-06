@@ -139,15 +139,17 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     backgroundColor: "#27598E",//"#2c5f7c",
-    paddingVertical: 12,
-    borderRadius: 20,
+    paddingVertical: 6, // altura (antes 12)
+    paddingHorizontal: 12,   // ancho controlado
+    borderRadius: 14,//20
     alignItems: "center",
+    alignSelf: "center", //clave
   },
   buttonText: {
     color: "#fff",
     fontSize: 20,//16,
     fontFamily: "sans-serif",
-    fontWeight: "600", //needed?
+    fontWeight: "400", //600 needed?
   },
   title: {
     fontSize: 40,
