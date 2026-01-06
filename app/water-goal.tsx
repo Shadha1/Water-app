@@ -1,35 +1,38 @@
 import { UserProfileInput } from "@/constants/water-core/userProfile";
+import { calculateDailyWaterMl } from "@/constants/water-core/water-formula";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
-const Home = () => {
-  const [name, setName] = useState("");
+export default function WaterGoal() {
+  const [result, setResult] = useState<number | null>(null);
 
   useEffect(() => {
-    const loadData = async () => {
+    const calData = async () => {
       const stored = await AsyncStorage.getItem("userProfile");
       if (!stored) return;
       const profile: UserProfileInput = JSON.parse(stored);
-      setName(profile.name);
+
+      const waterMl = calculateDailyWaterMl(profile);
+      setResult(waterMl);
     };
-    loadData();
+    calData();
   }, []);
+
+  if (!result) return null;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello {name}</Text>
-      <TouchableOpacity onPress={() => router.push("/")}>
-        <Text>Edit profile</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>
+        You should drink {(result / 1000).toFixed(1)} L / day 💧
+      </Text>
 
-      <Button title="Back" onPress={() => router.replace("/water-goal")} />
+      <Button title="Next" onPress={() => router.replace("/(tabs)/home")} />
+      <Button title="Back" onPress={() => router.replace("/")} />
     </View>
   );
-};
-
-export default Home;
+}
 
 const styles = StyleSheet.create({
   container: {

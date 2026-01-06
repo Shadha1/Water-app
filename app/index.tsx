@@ -1,7 +1,8 @@
+import { UserProfileInput } from "@/constants/water-core/userProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   StyleSheet,
@@ -12,31 +13,81 @@ import {
 } from "react-native";
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
+
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState<"male" | "female" | "">("");
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
-  //const [weather, setWeather] = useState("");
+  const [activityLevel, setActivityLevel] = useState<
+    "low" | "moderate" | "high"
+  >("moderate");
 
-  const handleConfirm = async (
-    name?: string,
-    gender?: string,
-    age?: string,
-    weight?: string
-  ) => {
-    try {
-      const data = { name, gender, age, weight /*weather*/ };
-      await AsyncStorage.setItem("userInfo", JSON.stringify(data));
-      Alert.alert("Success", "User information saved locally");
-    } catch (error) {
-      Alert.alert("Error", "Failed to save data");
+  const [climate, setClimate] = useState<"cold" | "temperate" | "hot">(
+    "temperate"
+  );
+
+  useEffect(() => {
+    const checkProfile = async () => {
+      const stored = await AsyncStorage.getItem("userProfile");
+
+      if (stored) {
+        router.replace("/water-goal"); // or /(tabs)/home
+        return;
+      }
+
+      setLoading(false);
+    };
+
+    checkProfile();
+  }, []);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const stored = await AsyncStorage.getItem("userProfile");
+
+      if (stored) {
+        const profile: UserProfileInput = JSON.parse(stored);
+
+        setName(profile.name);
+        setGender(profile.gender);
+        setAge(String(profile.ageYears));
+        setWeight(String(profile.weightKg));
+        setActivityLevel(profile.activityLevel);
+        setClimate(profile.climate);
+      }
+
+      setLoading(false);
+    };
+
+    loadProfile();
+  }, []);
+
+  if (loading) {
+    return null; // or a splash/loading indicator
+  }
+
+  const saveData = async () => {
+    if (!name || !gender || !age || !weight) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
     }
-  };
 
-  const saveData = () => {
-    setName(name);
-    handleConfirm(name, gender, age, weight);
-    router.replace("/(tabs)/home");
+    const profile: UserProfileInput = {
+      name,
+      gender,
+      ageYears: Number(age),
+      weightKg: Number(weight),
+      activityLevel,
+      climate,
+    };
+
+    try {
+      await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
+      router.replace("/(tabs)/home");
+    } catch {
+      Alert.alert("Error", "Failed to save profile");
+    }
   };
 
   return (
@@ -47,10 +98,7 @@ const Index = () => {
 
         <Text style={styles.label}>Gender</Text>
         <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={gender}
-            onValueChange={(itemValue) => setGender(itemValue)}
-          >
+          <Picker selectedValue={gender} onValueChange={setGender}>
             <Picker.Item label="Select gender" value="" />
             <Picker.Item label="Male" value="male" />
             <Picker.Item label="Female" value="female" />
@@ -73,12 +121,17 @@ const Index = () => {
           keyboardType="numeric"
         />
 
-        {/*<Text style={styles.label}>Weather</Text>
-        <TextInput
-          style={styles.input}
-          value={weather}
-          onChangeText={setWeather}
-        />*/}
+        <Text style={styles.label}>Activity Level</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={activityLevel}
+            onValueChange={(itemValue) => setActivityLevel(itemValue)}
+          >
+            <Picker.Item label="Low (little movement)" value="low" />
+            <Picker.Item label="Moderate (daily activity)" value="moderate" />
+            <Picker.Item label="High (sports / hard work)" value="high" />
+          </Picker>
+        </View>
 
         <TouchableOpacity style={styles.button} onPress={saveData}>
           <Text style={styles.buttonText}>Confirm</Text>
@@ -91,13 +144,6 @@ const Index = () => {
 export default Index;
 
 const styles = StyleSheet.create({
-  pickerContainer: {
-    backgroundColor: "#fff",
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    marginBottom: 12,
-  },
   container: {
     flex: 1,
     backgroundColor: "#e6f0f2",
@@ -118,6 +164,14 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#ccc",
+  },
+
+  pickerContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginBottom: 12,
   },
   button: {
     marginTop: 20,
