@@ -6,7 +6,7 @@
 //import { Link } from "expo-router";
 
 //Mica:
-import { Image } from "react-native";
+//import { Image } from "react-native";
 //Shadha:
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
@@ -14,12 +14,19 @@ import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   Alert,
+  Image,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+
+// No mostrar Header "index":
+export const unstable_settings = {
+  headerShown: false, // nunca muestra el header
+};
+
 
 const Index = () => {
   const [name, setName] = useState("");
@@ -105,7 +112,9 @@ const Index = () => {
       </View>
     </View>
   );
+
 };
+
 
 export default Index;
 
