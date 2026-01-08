@@ -1,9 +1,10 @@
 
 //Shadha:
+import { UserProfileInput } from "@/constants/water-core/userProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //I need:
 import {
   Alert,
@@ -22,31 +23,113 @@ export const unstable_settings = {
 
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
+
+  //Temporär: Nur um die Registration Seite sehen su können:
+  useEffect(() => {
+    AsyncStorage.clear();
+  }, []);
+
+
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState<"male" | "female" | "">("");
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
-  //const [weather, setWeather] = useState("");
+  const [activityLevel, setActivityLevel] = useState<
+    "low" | "moderate" | "high"
+  >("moderate");
 
-  const handleConfirm = async (
-    name?: string,
-    gender?: string,
-    age?: string,
-    weight?: string
-  ) => {
-    try {
-      const data = { name, gender, age, weight /*weather*/ };
-      await AsyncStorage.setItem("userInfo", JSON.stringify(data));
-      Alert.alert("Success", "User information saved locally");
-    } catch (error) {
-      Alert.alert("Error", "Failed to save data");
+  const [climate, setClimate] = useState<"cold" | "temperate" | "hot">(
+    "temperate"
+
+    // const [name, setName] = useState("");
+    // const [gender, setGender] = useState("");
+    // const [age, setAge] = useState("");
+    // const [weight, setWeight] = useState("");
+    //const [weather, setWeather] = useState(""); Este no
+  );
+
+  // const handleConfirm = async (
+  //   name?: string,
+  //   gender?: string,
+  //   age?: string,
+  //   weight?: string
+  // ) => {
+  //   try {
+  //     const data = { name, gender, age, weight /*weather*/ };
+  //     await AsyncStorage.setItem("userInfo", JSON.stringify(data));
+  //     Alert.alert("Success", "User information saved locally");
+  //   } catch (error) {
+  //     Alert.alert("Error", "Failed to save data");
+  //   }
+  // };
+
+  useEffect(() => {
+    const checkProfile = async () => {
+      const stored = await AsyncStorage.getItem("userProfile");
+
+      if (stored) {
+        router.replace("/water-goal"); // or /(tabs)/home
+        return;
+      }
+
+      setLoading(false);
+    };
+
+    checkProfile();
+  }, []);
+
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const stored = await AsyncStorage.getItem("userProfile");
+
+      if (stored) {
+        const profile: UserProfileInput = JSON.parse(stored);
+
+        setName(profile.name);
+        setGender(profile.gender);
+        setAge(String(profile.ageYears));
+        setWeight(String(profile.weightKg));
+        setActivityLevel(profile.activityLevel);
+        setClimate(profile.climate);
+      }
+
+      setLoading(false);
+    };
+
+    loadProfile();
+  }, []);
+
+  if (loading) {
+    return null; // or a splash/loading indicator
+  }
+  const saveData = async () => {
+    if (!name || !gender || !age || !weight) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
     }
-  };
+    // const saveData = () => {
+    //   setName(name);
+    //   handleConfirm(name, gender, age, weight);
+    //   router.replace("/(tabs)/home");
+    // };
 
-  const saveData = () => {
-    setName(name);
-    handleConfirm(name, gender, age, weight);
-    router.replace("/(tabs)/home");
+    const profile: UserProfileInput = {
+      name,
+      gender,
+      ageYears: Number(age),
+      weightKg: Number(weight),
+      activityLevel,
+      climate,
+    };
+
+    try {
+      await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
+      router.replace("/water-goal"); //router.replace("/(tabs)/home");
+    } catch {
+      Alert.alert("Error", "Failed to save profile");
+    }
   };
 
   return (
@@ -55,8 +138,6 @@ const Index = () => {
         source={require("../assets/images/gif_standard.gif")}
         style={styles.gif}
       />
-
-
       <Text style={styles.title}>WaterMe</Text>
 
       <View style={styles.form}>
@@ -91,6 +172,21 @@ const Index = () => {
           onChangeText={setWeight}
           keyboardType="numeric"
         />
+
+        {/* Nuevo: */}
+        <Text style={styles.label}>Activity Level</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={activityLevel}
+            onValueChange={(itemValue) => setActivityLevel(itemValue)}
+            style={{ color: "#27598E" }} // Mica
+          >
+            <Picker.Item label="Low (little movement)" value="low" color="#27598E" />
+            <Picker.Item label="Moderate (daily activity)" value="moderate" color="#27598E" />
+            <Picker.Item label="High (sports / hard work)" value="high" color="#27598E" />
+          </Picker>
+        </View>
+
 
         {/*<Text style={styles.label}>Weather</Text>
         <TextInput
@@ -128,9 +224,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   label: {
-    fontSize: 14,
+    fontSize: 20,
     marginBottom: 4,
     color: "#27598E",//"#2c5f7c",
+    fontFamily: "serif",
   },
   input: {
     backgroundColor: "#fff",

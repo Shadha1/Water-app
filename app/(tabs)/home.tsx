@@ -1,18 +1,18 @@
+import { UserProfileInput } from "@/constants/water-core/userProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
     const loadData = async () => {
-      const stored = await AsyncStorage.getItem("userInfo");
-      if (stored) {
-        const user = JSON.parse(stored);
-        setName(user.name);
-      }
+      const stored = await AsyncStorage.getItem("userProfile");
+      if (!stored) return;
+      const profile: UserProfileInput = JSON.parse(stored);
+      setName(profile.name);
     };
     loadData();
   }, []);
@@ -20,8 +20,11 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Hello {name}</Text>
+      <TouchableOpacity onPress={() => router.push("/")}>
+        <Text>Edit profile</Text>
+      </TouchableOpacity>
 
-      <Button title="Back" onPress={() => router.replace("/")} />
+      <Button title="Back" onPress={() => router.replace("/water-goal")} />
     </View>
   );
 };
