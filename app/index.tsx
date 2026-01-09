@@ -2,7 +2,7 @@ import { UserProfileInput } from "@/constants/water-core/userProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Alert,
   StyleSheet,
@@ -13,8 +13,6 @@ import {
 } from "react-native";
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-
   const [name, setName] = useState("");
   const [gender, setGender] = useState<"male" | "female" | "">("");
   const [age, setAge] = useState("");
@@ -26,46 +24,6 @@ const Index = () => {
   const [climate, setClimate] = useState<"cold" | "temperate" | "hot">(
     "temperate"
   );
-
-  useEffect(() => {
-    const checkProfile = async () => {
-      const stored = await AsyncStorage.getItem("userProfile");
-
-      if (stored) {
-        router.replace("/water-goal"); // or /(tabs)/home
-        return;
-      }
-
-      setLoading(false);
-    };
-
-    checkProfile();
-  }, []);
-
-  useEffect(() => {
-    const loadProfile = async () => {
-      const stored = await AsyncStorage.getItem("userProfile");
-
-      if (stored) {
-        const profile: UserProfileInput = JSON.parse(stored);
-
-        setName(profile.name);
-        setGender(profile.gender);
-        setAge(String(profile.ageYears));
-        setWeight(String(profile.weightKg));
-        setActivityLevel(profile.activityLevel);
-        setClimate(profile.climate);
-      }
-
-      setLoading(false);
-    };
-
-    loadProfile();
-  }, []);
-
-  if (loading) {
-    return null; // or a splash/loading indicator
-  }
 
   const saveData = async () => {
     if (!name || !gender || !age || !weight) {
@@ -84,7 +42,7 @@ const Index = () => {
 
     try {
       await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
-      router.replace("/(tabs)/home");
+      router.replace("/water-goal");
     } catch {
       Alert.alert("Error", "Failed to save profile");
     }
