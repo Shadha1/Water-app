@@ -1,25 +1,23 @@
 import { UserProfileInput } from "@/constants/water-core/userProfile";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loadUserProfile } from "@/constants/water-core/userStorage";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
-  const [name, setName] = useState("");
+  const [profile, setProfile] = useState<UserProfileInput | null>(null);
 
   useEffect(() => {
-    const loadData = async () => {
-      const stored = await AsyncStorage.getItem("userProfile");
-      if (!stored) return;
-      const profile: UserProfileInput = JSON.parse(stored);
-      setName(profile.name);
-    };
-    loadData();
+    (async () => {
+      const stored = await loadUserProfile();
+      if (stored) setProfile(stored);
+    })();
   }, []);
 
+  // Mica's teil
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello {name}</Text>
+      <Text style={styles.title}>Hello {profile?.name}</Text>
       <TouchableOpacity onPress={() => router.push("/")}>
         <Text>Edit profile</Text>
       </TouchableOpacity>

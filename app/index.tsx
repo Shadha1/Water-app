@@ -1,10 +1,9 @@
-import { UserProfileInput } from "@/constants/water-core/userProfile";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { defaultForm, FormFields } from "@/constants/water-core/userForm";
+import { saveUserProfile } from "@/constants/water-core/userStorage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
-  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -12,51 +11,39 @@ import {
   View,
 } from "react-native";
 
-const Index = () => {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState<"male" | "female" | "">("");
-  const [age, setAge] = useState("");
-  const [weight, setWeight] = useState("");
-  const [activityLevel, setActivityLevel] = useState<
-    "low" | "moderate" | "high"
-  >("moderate");
+export default function Index() {
+  // Form state
+  const [form, setForm] = useState<FormFields>(defaultForm); // Initializes the form state with default values
 
-  const [climate, setClimate] = useState<"cold" | "temperate" | "hot">(
-    "temperate"
-  );
+  // Updates the form state by setting the specified field to the given value
+  const setField = <K extends keyof FormFields>(key: K, value: FormFields[K]) =>
+    setForm((s) => ({ ...s, [key]: value }));
 
+  /** Saves the form data to AsyncStorage and navigates to the water goal screen
+   * Uses the storage service which validates the form and persists it.
+   */
   const saveData = async () => {
-    if (!name || !gender || !age || !weight) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
-    const profile: UserProfileInput = {
-      name,
-      gender,
-      ageYears: Number(age),
-      weightKg: Number(weight),
-      activityLevel,
-      climate,
-    };
-
-    try {
-      await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
-      router.replace("/water-goal");
-    } catch {
-      Alert.alert("Error", "Failed to save profile");
-    }
+    await saveUserProfile(form);
+    router.replace("/water-goal");
   };
 
+  // Mica's teil
   return (
     <View style={styles.container}>
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
-        <TextInput style={styles.input} value={name} onChangeText={setName} />
+        <TextInput
+          style={styles.input}
+          value={form.name}
+          onChangeText={(text) => setField("name", text)}
+        />
 
         <Text style={styles.label}>Gender</Text>
         <View style={styles.pickerContainer}>
-          <Picker selectedValue={gender} onValueChange={setGender}>
+          <Picker
+            selectedValue={form.gender}
+            onValueChange={(gender) => setField("gender", gender)}
+          >
             <Picker.Item label="Select gender" value="" />
             <Picker.Item label="Male" value="male" />
             <Picker.Item label="Female" value="female" />
@@ -66,28 +53,42 @@ const Index = () => {
         <Text style={styles.label}>Age</Text>
         <TextInput
           style={styles.input}
-          value={age}
-          onChangeText={setAge}
+          value={form.ageYears}
+          onChangeText={(text) => setField("ageYears", text)}
           keyboardType="numeric"
         />
 
         <Text style={styles.label}>Weight</Text>
         <TextInput
           style={styles.input}
-          value={weight}
-          onChangeText={setWeight}
+          value={form.weightKg}
+          onChangeText={(text) => setField("weightKg", text)}
           keyboardType="numeric"
         />
 
         <Text style={styles.label}>Activity Level</Text>
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={activityLevel}
-            onValueChange={(itemValue) => setActivityLevel(itemValue)}
+            selectedValue={form.activityLevel}
+            onValueChange={(activityLevel) =>
+              setField("activityLevel", activityLevel)
+            }
           >
             <Picker.Item label="Low (little movement)" value="low" />
             <Picker.Item label="Moderate (daily activity)" value="moderate" />
             <Picker.Item label="High (sports / hard work)" value="high" />
+          </Picker>
+        </View>
+
+        <Text style={styles.label}>Climate</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={form.climate}
+            onValueChange={(climate) => setField("climate", climate)}
+          >
+            <Picker.Item label="Cold" value="cold" />
+            <Picker.Item label="Temperate" value="temperate" />
+            <Picker.Item label="Hot" value="hot" />
           </Picker>
         </View>
 
@@ -97,9 +98,7 @@ const Index = () => {
       </View>
     </View>
   );
-};
-
-export default Index;
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,39 +1,44 @@
 import { UserProfileInput } from "@/constants/water-core/userProfile";
-import { calculateDailyWaterMl } from "@/constants/water-core/water-formula";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loadUserProfile } from "@/constants/water-core/userStorage";
+import { calculateDailyWaterMl } from "@/constants/water-core/water-index";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
+/** Water Goal Screen
+ * Fetches the user profile from AsyncStorage, calculates the daily water intake,
+ * and displays it to the user. Provides navigation to the reminder setup and back to the profile screen.
+ */
+
 export default function WaterGoal() {
-  const [result, setResult] = useState<number | null>(null);
+  // State to hold the user profile
+  const [profile, setProfile] = useState<UserProfileInput | null>(null);
 
   useEffect(() => {
-    const calData = async () => {
-      const stored = await AsyncStorage.getItem("userProfile");
-      if (!stored) return;
-      const profile: UserProfileInput = JSON.parse(stored);
-
-      const waterMl = calculateDailyWaterMl(profile);
-      setResult(waterMl);
-    };
-    calData();
+    (async () => {
+      const stored = await loadUserProfile(); // Load the user profile from storage
+      setProfile(stored);
+    })();
   }, []);
 
-  if (!result) return null;
+  if (!profile) return null;
 
+  const dailyMl = calculateDailyWaterMl(profile);
+
+  // Mica's teil
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        You should drink {(result / 1000).toFixed(1)} L / day 💧
+        You should drink {(dailyMl / 1000).toFixed(1)} L / day 💧
       </Text>
 
-      <Button title="Next" onPress={() => router.replace("/(tabs)/home")} />
+      <Button title="Next" onPress={() => router.replace("/reminder")} />
       <Button title="Back" onPress={() => router.replace("/")} />
     </View>
   );
 }
 
+// Mica's teil
 const styles = StyleSheet.create({
   container: {
     flex: 1,
