@@ -1,5 +1,3 @@
-import { UserProfileInput } from "@/constants/water-core/userProfile";
-import { loadUserProfile } from "@/constants/water-core/userStorage";
 import {
   calculateDailyWaterMl,
   getActivityLevelValue,
@@ -7,7 +5,7 @@ import {
   getClimateValue,
   getGenderValue,
 } from "@/constants/water-core/water-formula";
-import { useEffect, useState } from "react";
+import useUserData from "@/hooks/loadUser";
 import { StyleSheet, Text, View } from "react-native";
 //import { mockUserProfile } from '@/mocks/mockUserProfile';
 
@@ -17,19 +15,12 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function DebugWaterScreen() {
   /**  const genderValue = getGenderValue(mockUserProfile.gender);
-   *   const ageValue = getAgeValue(mockUserProfile.ageYears); */
+   *   const ageValue = getAgeValue(mockUserProfile.ageYears);
+   *   runWaterTrackerDebug();*/
 
-  const [profile, setProfile] = useState<UserProfileInput | null>(null);
-
-  // runWaterTrackerDebug();
-  useEffect(() => {
-    (async () => {
-      const stored = await loadUserProfile();
-      setProfile(stored);
-    })();
-  }, []);
-
-  if (!profile) return null;
+  // Get user profile from hook
+  const { profile, loading } = useUserData();
+  if (loading || !profile) return null;
 
   return (
     <View style={styles.container}>

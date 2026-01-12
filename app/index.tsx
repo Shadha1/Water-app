@@ -1,9 +1,12 @@
 import { defaultForm, FormFields } from "@/constants/water-core/userForm";
-import { saveUserProfile } from "@/constants/water-core/userStorage";
+import useUserData from "@/hooks/loadUser";
+import { saveUserProfile } from "@/hooks/userStorage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -12,26 +15,39 @@ import {
 } from "react-native";
 
 export default function Index() {
-  // Form state
-  const [form, setForm] = useState<FormFields>(defaultForm); // Initializes the form state with default values
-
+  //Initializes the form state with default values
+  const [form, setForm] = useState<FormFields>(defaultForm);
   // Updates the form state by setting the specified field to the given value
   const setField = <K extends keyof FormFields>(key: K, value: FormFields[K]) =>
     setForm((s) => ({ ...s, [key]: value }));
 
-  /** Saves the form data to AsyncStorage and navigates to the water goal screen
-   * Uses the storage service which validates the form and persists it.
-   */
+  // Saves the form data to AsyncStorage and navigates to the water goal screen
   const saveData = async () => {
-    await saveUserProfile(form);
-    router.replace("/water-goal");
+    try {
+      await saveUserProfile(form);
+      router.push("/water-goal"); // router.push instead of router.replace to allow going back and forth between screens
+    } catch (err) {
+      Alert.alert("Could not save profile", (err as Error).message);
+    }
   };
-// No mostrar Header "index":
-export const unstable_settings = {
-  headerShown: false, // nunca muestra el header
-};
 
+  // If a profile already exists, go straight to Home (tabs) to avoid showing form again.
+  const { profile, loading } = useUserData();
 
+  useEffect(() => {
+    if (!loading && profile) {
+      router.replace("/(tabs)/home");
+    }
+  }, [loading, profile]);
+
+  if (loading) return null; // While the profile is loading, avoid rendering the form (prevents flicker)
+
+  /* No mostrar Header "index":
+  export const unstable_settings = {
+    headerShown: false, // nunca muestra el header
+  };*/
+
+  // Mica's teil
   return (
     <View style={styles.container}>
       <Image
@@ -42,9 +58,11 @@ export const unstable_settings = {
 
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
-        <TextInput style={styles.input}           
-        value={form.name}
-        onChangeText={(text) => setField("name", text)} />
+        <TextInput
+          style={styles.input}
+          value={form.name}
+          onChangeText={(text) => setField("name", text)}
+        />
 
         <Text style={styles.label}>Gender</Text>
         <View style={styles.pickerContainer}>
@@ -84,9 +102,21 @@ export const unstable_settings = {
             }
             style={{ color: "#27598E" }} // Mica
           >
-             <Picker.Item label="Low (little movement)" value="low" color="#27598E" />
-            <Picker.Item label="Moderate (daily activity)" value="moderate" color="#27598E" />
-            <Picker.Item label="High (sports / hard work)" value="high" color="#27598E" />
+            <Picker.Item
+              label="Low (little movement)"
+              value="low"
+              color="#27598E"
+            />
+            <Picker.Item
+              label="Moderate (daily activity)"
+              value="moderate"
+              color="#27598E"
+            />
+            <Picker.Item
+              label="High (sports / hard work)"
+              value="high"
+              color="#27598E"
+            />
           </Picker>
         </View>
 
@@ -94,7 +124,8 @@ export const unstable_settings = {
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={form.climate}
-            onValueChange={(climate) => setField("climate", climate)} style={{ color: "#27598E" }}
+            onValueChange={(climate) => setField("climate", climate)}
+            style={{ color: "#27598E" }}
           >
             <Picker.Item label="Cold" value="cold" color="#27598E" />
             <Picker.Item label="Temperate" value="temperate" color="#27598E" />
@@ -109,8 +140,6 @@ export const unstable_settings = {
     </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   pickerContainer: {
@@ -131,7 +160,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     marginBottom: 4,
-    color: "#27598E",//"#2c5f7c",
+    color: "#27598E", //"#2c5f7c",
     fontFamily: "serif",
   },
   input: {
@@ -148,16 +177,16 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#27598E",//"#2c5f7c",
+    backgroundColor: "#27598E", //"#2c5f7c",
     paddingVertical: 6, // altura (antes 12)
-    paddingHorizontal: 12,   // ancho controlado
-    borderRadius: 14,//20
+    paddingHorizontal: 12, // ancho controlado
+    borderRadius: 14, //20
     alignItems: "center",
     alignSelf: "center", //clave
   },
   buttonText: {
     color: "#fff",
-    fontSize: 20,//16,
+    fontSize: 20, //16,
     fontFamily: "sans-serif",
     fontWeight: "400", //600 needed?
   },
@@ -165,16 +194,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontFamily: "serif", // Jacques Francois Shadow real
     textAlign: "center",
-    color: "#27598E",//#D6E4E5
+    color: "#27598E", //#D6E4E5
 
     marginBottom: 30,
-    textShadowColor: "#00001c",//sombra
+    textShadowColor: "#00001c", //sombra
     textShadowOffset: { width: 1, height: 0 },
     textShadowRadius: 1,
   },
   gif: {
     position: "absolute", //así no afecta lo demás
-    top: 20,        // ajustar según notch. Mas pequeno, más pegado al borde.
+    top: 20, // ajustar según notch. Mas pequeno, más pegado al borde.
     left: 10,
     width: 100,
     height: 100,

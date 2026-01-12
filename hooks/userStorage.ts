@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { buildProfile, FormFields } from "./userForm";
-import { UserProfileInput } from "./userProfile";
+import { buildProfile, FormFields } from "../constants/water-core/userForm";
+import { UserProfileInput } from "../constants/water-core/userProfile";
 const PROFILE_KEY = "userProfile";
 
 /**
- * Save a profile to AsyncStorage. The User profile data can later be loaded with `loadUserProfile`.
+ * Save a profile to AsyncStorage.
  * Throws an error if saving fails or if the profile is invalid.
  */
 
@@ -30,12 +30,13 @@ export async function saveUserProfile(
  * Returns the parsed UserProfileInput or null if not present.
  */
 export async function loadUserProfile(): Promise<UserProfileInput | null> {
-  try {
-    const raw = await AsyncStorage.getItem(PROFILE_KEY);
-    return raw ? (JSON.parse(raw) as UserProfileInput) : null;
-  } catch {
-    // If reading fails, return null (caller can handle as needed)
-    return null;
-  }
+  const raw = await AsyncStorage.getItem(PROFILE_KEY);
+  return raw ? (JSON.parse(raw) as UserProfileInput) : null;
+}
+
+// Delete the saved user profile.
+
+export async function deleteUserProfile(): Promise<void> {
+  await AsyncStorage.removeItem(PROFILE_KEY);
 }
 export { PROFILE_KEY };

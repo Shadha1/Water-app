@@ -29,7 +29,6 @@ export const defaultForm: FormFields = {
 /** Builds a UserProfileInput from the form fields, or null if invalid
  * Validations:
  * required fields are filled
- * age and weight are valid positive numbers
  * Returns null if any validation fails
  * Otherwise returns a UserProfileInput with correct types
  */
@@ -40,10 +39,9 @@ export function buildProfile(fields: FormFields): UserProfileInput | null {
   if (!name || !gender || !ageYears || !weightKg) return null;
 
   // converts strings to numbers
-
   const age = Number(ageYears);
   const weight = Number(weightKg);
-
+  //age and weight are valid positive numbers
   if (!Number.isFinite(age) || !Number.isFinite(weight)) return null;
   if (age <= 0 || weight <= 0) return null;
 

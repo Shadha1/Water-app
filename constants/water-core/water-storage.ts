@@ -27,3 +27,11 @@ export async function saveConsumedMl(value: number): Promise<void> {
 
   await AsyncStorage.setItem(KEY_CONSUMED_ML, String(safeValue));
 }
+
+/**
+ * Entfernt den gespeicherten Wasserverbrauch aus dem Storage.
+ * Nützlich beim Zurücksetzen/Profil-Löschung.
+ */
+export async function clearConsumedMl(): Promise<void> {
+  await AsyncStorage.removeItem(KEY_CONSUMED_ML);
+}

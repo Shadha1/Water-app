@@ -1,7 +1,7 @@
-import type { UserProfileInput } from './userProfile';
-import { calculateDailyWaterMl } from './water-formula';
-import { loadConsumedMl, saveConsumedMl } from './water-storage';
-import { createWaterTracker } from './water-tracker';
+import type { UserProfileInput } from "./userProfile";
+import { calculateDailyWaterMl } from "./water-formula";
+import { loadConsumedMl, saveConsumedMl } from "./water-storage";
+import { createWaterTracker } from "./water-tracker";
 
 export function createTrackerFromProfile(profile: UserProfileInput) {
   const goalMl = calculateDailyWaterMl(profile);
@@ -9,7 +9,9 @@ export function createTrackerFromProfile(profile: UserProfileInput) {
 }
 
 // Session: lädt beim Start + speichert nach drink/edit
-export async function createHydratedSessionFromProfile(profile: UserProfileInput) {
+export async function createHydratedSessionFromProfile(
+  profile: UserProfileInput
+) {
   const tracker = createTrackerFromProfile(profile);
 
   const saved = await loadConsumedMl();
@@ -30,6 +32,10 @@ export async function createHydratedSessionFromProfile(profile: UserProfileInput
   return { tracker, drink, edit };
 }
 
-export { calculateDailyWaterMl, createWaterTracker, loadConsumedMl, saveConsumedMl };
+export {
+  calculateDailyWaterMl,
+  createWaterTracker,
+  loadConsumedMl,
+  saveConsumedMl,
+};
 export type { UserProfileInput };
-
