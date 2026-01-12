@@ -1,10 +1,19 @@
+import { Stack } from "expo-router";
+import React from "react"; //Shadha
+
+export default function RootLayout() {
+  return (<Stack
+    screenOptions={{
+      headerShown: false, // oculta el header en TODAS las pantallas
+    }}
+  />
+  );
+}
 /*import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return <Stack />;
 }*/
-import { Stack } from "expo-router";
-import React from "react";
 
 const isLoggedIn = false;
 

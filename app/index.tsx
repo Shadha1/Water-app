@@ -26,27 +26,36 @@ export default function Index() {
     await saveUserProfile(form);
     router.replace("/water-goal");
   };
+// No mostrar Header "index":
+export const unstable_settings = {
+  headerShown: false, // nunca muestra el header
+};
 
-  // Mica's teil
+
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/gif_standard.gif")}
+        style={styles.gif}
+      />
+      <Text style={styles.title}>WaterMe</Text>
+
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
-          value={form.name}
-          onChangeText={(text) => setField("name", text)}
-        />
+        <TextInput style={styles.input}           
+        value={form.name}
+        onChangeText={(text) => setField("name", text)} />
 
         <Text style={styles.label}>Gender</Text>
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={form.gender}
             onValueChange={(gender) => setField("gender", gender)}
+            style={{ color: "#27598E" }} // Mica
           >
-            <Picker.Item label="Select gender" value="" />
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
+            <Picker.Item label="Select gender" value="" color="#27598E" />
+            <Picker.Item label="Male" value="male" color="#27598E" />
+            <Picker.Item label="Female" value="female" color="#27598E" />
           </Picker>
         </View>
 
@@ -73,10 +82,11 @@ export default function Index() {
             onValueChange={(activityLevel) =>
               setField("activityLevel", activityLevel)
             }
+            style={{ color: "#27598E" }} // Mica
           >
-            <Picker.Item label="Low (little movement)" value="low" />
-            <Picker.Item label="Moderate (daily activity)" value="moderate" />
-            <Picker.Item label="High (sports / hard work)" value="high" />
+             <Picker.Item label="Low (little movement)" value="low" color="#27598E" />
+            <Picker.Item label="Moderate (daily activity)" value="moderate" color="#27598E" />
+            <Picker.Item label="High (sports / hard work)" value="high" color="#27598E" />
           </Picker>
         </View>
 
@@ -84,11 +94,11 @@ export default function Index() {
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={form.climate}
-            onValueChange={(climate) => setField("climate", climate)}
+            onValueChange={(climate) => setField("climate", climate)} style={{ color: "#27598E" }}
           >
-            <Picker.Item label="Cold" value="cold" />
-            <Picker.Item label="Temperate" value="temperate" />
-            <Picker.Item label="Hot" value="hot" />
+            <Picker.Item label="Cold" value="cold" color="#27598E" />
+            <Picker.Item label="Temperate" value="temperate" color="#27598E" />
+            <Picker.Item label="Hot" value="hot" color="#27598E" />
           </Picker>
         </View>
 
@@ -100,7 +110,16 @@ export default function Index() {
   );
 }
 
+
+
 const styles = StyleSheet.create({
+  pickerContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginBottom: 12,
+  },
   container: {
     flex: 1,
     backgroundColor: "#e6f0f2",
@@ -110,9 +129,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   label: {
-    fontSize: 14,
+    fontSize: 20,
     marginBottom: 4,
-    color: "#2c5f7c",
+    color: "#27598E",//"#2c5f7c",
+    fontFamily: "serif",
   },
   input: {
     backgroundColor: "#fff",
@@ -121,25 +141,42 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#ccc",
-  },
-
-  pickerContainer: {
-    backgroundColor: "#fff",
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    marginBottom: 12,
+    //Mica:
+    fontSize: 20,
+    fontFamily: "sans-serif", //"Inder"
+    color: "#27598E",
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#2c5f7c",
-    paddingVertical: 12,
-    borderRadius: 20,
+    backgroundColor: "#27598E",//"#2c5f7c",
+    paddingVertical: 6, // altura (antes 12)
+    paddingHorizontal: 12,   // ancho controlado
+    borderRadius: 14,//20
     alignItems: "center",
+    alignSelf: "center", //clave
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 20,//16,
+    fontFamily: "sans-serif",
+    fontWeight: "400", //600 needed?
+  },
+  title: {
+    fontSize: 40,
+    fontFamily: "serif", // Jacques Francois Shadow real
+    textAlign: "center",
+    color: "#27598E",//#D6E4E5
+
+    marginBottom: 30,
+    textShadowColor: "#00001c",//sombra
+    textShadowOffset: { width: 1, height: 0 },
+    textShadowRadius: 1,
+  },
+  gif: {
+    position: "absolute", //así no afecta lo demás
+    top: 20,        // ajustar según notch. Mas pequeno, más pegado al borde.
+    left: 10,
+    width: 100,
+    height: 100,
   },
 });
