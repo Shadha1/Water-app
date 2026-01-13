@@ -33,7 +33,7 @@ export default function Index() {
   const saveData = async () => {
     try {
       await saveUserProfile(form);
-      router.push("/water-goal"); // router.push instead of router.replace to allow going back and forth between screens
+      router.push("./water-goal"); // router.push instead of router.replace to allow going back and forth between screens
     } catch (err) {
       Alert.alert("Could not save profile", (err as Error).message);
     }
@@ -44,7 +44,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!loading && profile) {
-      router.replace("/(tabs)/home");
+      router.replace("./(tabs)/home");
     }
   }, [loading, profile]);
 
