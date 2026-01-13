@@ -1,6 +1,7 @@
 import { defaultForm, FormFields } from "@/constants/water-core/userForm";
 import useUserData from "@/hooks/loadUser";
 import { saveUserProfile } from "@/hooks/userStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -15,6 +16,13 @@ import {
 } from "react-native";
 
 export default function Index() {
+
+  //Temporär: Nur um die Registration Seite sehen su können:
+  useEffect(() => {
+    AsyncStorage.clear();
+  }, []);
+
+
   //Initializes the form state with default values
   const [form, setForm] = useState<FormFields>(defaultForm);
   // Updates the form state by setting the specified field to the given value

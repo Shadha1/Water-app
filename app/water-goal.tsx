@@ -2,6 +2,7 @@ import { calculateDailyWaterMl } from "@/constants/water-core/water-index";
 import useUserData from "@/hooks/loadUser";
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image } from "react-native";
 
 /** Water Goal Screen
  * Fetches the user profile from AsyncStorage, calculates the daily water intake,
@@ -18,23 +19,31 @@ export default function WaterGoal() {
   // Mica's teil
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/gif_standard.gif")}
+        style={styles.gif}
+      />
       <Text style={styles.label}>
         You should drink {(dailyMl / 1000).toFixed(1)} L / day 💧
       </Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.replace("/(tabs)/home")}
-      >
-        <Text style={styles.buttonText}>Confirm</Text>
-      </TouchableOpacity>
+      {/* Botones en fila */}
+      <View style={styles.buttonRow}>
+        <TouchableOpacity
+          style={styles.buttonBack}
+          onPress={() => router.back()}
+        >
+          <Text style={styles.buttonText}>←</Text>
+        </TouchableOpacity>
 
-      {/* router.back() instead of router.replace to allow going back to the profile screen */}
-      <TouchableOpacity style={styles.buttonBack} onPress={() => router.back()}>
-        <Text style={styles.buttonText}>←</Text>
-        {/* statt "Back" */}
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.replace("/(tabs)/home")}
+        >
+          <Text style={styles.buttonText}>Confirm</Text>
+        </TouchableOpacity>
+      </View>
+    </View >
   );
 }
 
@@ -42,8 +51,10 @@ export default function WaterGoal() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     backgroundColor: "#e6f0f2",
+    paddingHorizontal: 20,
+    paddingTop: 200, //bajar el texto (antes 80)
+    justifyContent: "space-between", // espacio entre texto y botones
   },
   title: {
     fontSize: 24,
@@ -53,8 +64,8 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 6, // altura (antes 12)
-    paddingHorizontal: 12, // ancho controlado
+    paddingVertical: 10,// 6, // altura (antes 12)
+    paddingHorizontal: 20,//12, // ancho controlado
     borderRadius: 14, //20
     alignItems: "center",
     alignSelf: "center", //clave
@@ -62,8 +73,8 @@ const styles = StyleSheet.create({
   buttonBack: {
     marginTop: 20,
     backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 6, // altura (antes 12)
-    paddingHorizontal: 12, // ancho controlado
+    paddingVertical: 10,//6, // altura (antes 12)
+    paddingHorizontal: 20,//12, // ancho controlado
     borderRadius: 100, //20
     alignItems: "center",
     alignSelf: "center", //clave
@@ -76,8 +87,28 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 24,
-    marginBottom: 4,
+    marginBottom: 20,
+    marginTop: 180,
     color: "#27598E", //"#2c5f7c",
     fontFamily: "serif",
+    textAlign: "center",
+  },
+  buttonRow: {
+    flexDirection: "row", // botones en fila
+    justifyContent: "space-between", // flecha a la izquierda, confirm a la derecha
+    alignItems: "center",
+    marginBottom: 40, // separa los botones del borde inferior
+
+  },
+  gif: {
+    position: "absolute", //así no afecta lo demás
+    //top: 300, // ajustar según notch. Mas pequeno, más pegado al borde.
+    //left: 200,
+    //alignItems: "center",
+    marginTop: -80,       // baja el GIF respecto al texto
+    marginBottom: 40, // espacio entre GIF y botones
+    alignSelf: "center", // centra horizontalmente
+    width: 300,
+    height: 300,
   },
 });
