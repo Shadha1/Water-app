@@ -1,45 +1,33 @@
-import { UserProfileInput } from "@/constants/water-core/userProfile";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import GearButton from "@/components/GearButton";
+import useUserData from "@/hooks/loadUser";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-const Home = () => {
-  const [name, setName] = useState("");
+export default function Home() {
+  const { profile, loading } = useUserData(); // get profile from hook
+  if (loading || !profile) return null;
 
-  useEffect(() => {
-    const loadData = async () => {
-      const stored = await AsyncStorage.getItem("userProfile");
-      if (!stored) return;
-      const profile: UserProfileInput = JSON.parse(stored);
-      setName(profile.name);
-    };
-    loadData();
-  }, []);
-
+  // Mica's teil
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hello {name}</Text>
-      <TouchableOpacity onPress={() => router.push("/")}>
-        <Text>Edit profile</Text>
-      </TouchableOpacity>
+      <GearButton onPress={() => router.push("./settings")} />
 
-      <Button title="Back" onPress={() => router.replace("/water-goal")} />
+      <Text style={styles.title}>Hello {profile?.name}</Text>
     </View>
   );
-};
-
-export default Home;
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#dfeff0",
     alignItems: "center",
-    backgroundColor: "#e6f0f2",
+    paddingTop: 36,
   },
   title: {
-    fontSize: 24,
-    marginTop: 60,
-    marginBottom: 20,
+    fontSize: 30,
+    marginTop: 10,
+    color: "#0b3b4a",
   },
 });

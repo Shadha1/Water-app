@@ -4,11 +4,10 @@
 
 import { addWaterMl, remainingToGoalMl, setConsumedMl } from "./water-progress";
 
-
 export type WaterSnapshot = {
-  consumedMl: number;   
-  goalMl: number;       
-  remainingMl: number; 
+  consumedMl: number;
+  goalMl: number;
+  remainingMl: number;
 };
 
 // Erstellt einen neuen WaterTracker mit eigenem Zustand
@@ -44,5 +43,3 @@ export function createWaterTracker(goalMl: number) {
   // Öffentliche API des Trackers
   return { drink, edit, getSnapshot };
 }
-
-

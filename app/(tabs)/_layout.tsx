@@ -1,6 +1,6 @@
-import { HapticTab } from "@/app-example/components/haptic-tab";
-import { IconSymbol } from "@/app-example/components/ui/icon-symbol";
-import { Colors } from "@/app-example/constants/theme";
+import { HapticTab } from "@/components/haptic-tab";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import { Colors } from "@/constants/theme";
 import { Tabs } from "expo-router";
 import React from "react";
 import { useColorScheme } from "react-native";
@@ -11,7 +11,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].icon,
         headerShown: false,
         tabBarButton: HapticTab,
       }}
@@ -28,10 +28,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="debug-water"
         options={{
-          title: "Explore",
+          title: "Debug",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
+        }}
+      />
+      {/* hidden screens */}
+      <Tabs.Screen
+        name="settings"
+        options={{
+          href: null,
         }}
       />
     </Tabs>
