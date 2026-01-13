@@ -26,8 +26,12 @@ const styles = StyleSheet.create({
     paddingTop: 36,
   },
   title: {
-    fontSize: 30,
-    marginTop: 10,
-    color: "#0b3b4a",
+    fontSize: 24,
+    marginTop: 50,
+    marginLeft: 60,
+    color: "#27598E",
+    fontFamily: "serif",
+    textAlign: "left",
+    alignSelf: "flex-start", // mueve el text al inicio horizontal del container
   },
 });
