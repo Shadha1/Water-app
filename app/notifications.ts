@@ -1,7 +1,6 @@
+import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-
-
 
 export function setupNotificationHandler() {
   Notifications.setNotificationHandler({
@@ -15,8 +14,6 @@ export function setupNotificationHandler() {
   });
 }
 
-
-// check if device allows notifications
 export async function askNotificationPermission() {
   if (!Device.isDevice) return false;
 
@@ -31,22 +28,36 @@ export async function askNotificationPermission() {
   return finalStatus === "granted";
 }
 
-//schedule notifications
 export async function scheduleHourlyNotification() {
-  //if (remainingToGoalMl > 0)
-    return Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Erinnerung",
-        body: "Dies ist eine stündliche Notification!",
-      },
-      trigger: {
-        seconds: 3600,
-        repeats: true,
-        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL
-      },
-    });
+  return Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Erinnerung",
+      body: "Du hast dein Tagesziel noch nicht erreicht.",
+    },
+    trigger: {
+      seconds: 3600,
+      repeats: true,
+      type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+    },
+  });
 }
 
 export async function clearNotifications() {
   return Notifications.cancelAllScheduledNotificationsAsync();
+}
+
+/** Das ist die Funktion, die du “einbettest”: entscheidet anhand aktueller Werte */
+export async function updateHydrationNotifications() {
+  const snap = tryGetWaterSnapshot();
+
+  // Wenn Water noch nicht initialisiert ist (kein Profil etc.), nichts planen
+  if (!snap) return;
+
+  await clearNotifications();
+
+  // Bedingung: noch nicht genug getrunken
+  if (snap.consumedMl < snap.goalMl) {
+    await scheduleHourlyNotification();
+  }
+  // else: Ziel erreicht -> keine Notifications
 }

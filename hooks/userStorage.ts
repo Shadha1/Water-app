@@ -40,3 +40,4 @@ export async function deleteUserProfile(): Promise<void> {
   await AsyncStorage.removeItem(PROFILE_KEY);
 }
 export { PROFILE_KEY };
+

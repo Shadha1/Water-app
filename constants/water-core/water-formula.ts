@@ -18,7 +18,7 @@ export function getGenderValue(gender: Gender): number {
 
 
 //Bedarf nach alter anpassen
-export function getAgeValue(ageYears: number): number {
+export function AgeValue(ageYears: number): number {
   if (ageYears <= 17) {
     return 100;  
   } else if (ageYears <= 30) {
@@ -38,7 +38,7 @@ export function getAgeValue(ageYears: number): number {
 
 
 // return werte müssen noch angepasst werden
-export function getActivityLevelValue(activityLevel: 'low' | 'moderate' | 'high'): number {
+export function ActivityLevelValue(activityLevel: 'low' | 'moderate' | 'high'): number {
     if (activityLevel === 'low') {
       return 0.3;
     } else if (activityLevel === 'moderate') {
@@ -49,7 +49,7 @@ export function getActivityLevelValue(activityLevel: 'low' | 'moderate' | 'high'
 }
 
 
-export function getClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
+export function ClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
     if (climate === 'cold') {
       return 0.5;
     } else if (climate === 'temperate') {
@@ -64,11 +64,9 @@ export function getClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
 
   export function calculateDailyWaterMl(profile: UserProfileInput): number {
   const genderValue = getGenderValue(profile.gender);
-  const ageValue = getAgeValue(profile.ageYears);
-  const weightKg = profile.weightKg;
-  const ageYears = profile.ageYears;
-  const activityMultiplier = getActivityLevelValue(profile.activityLevel);
-  const climateMultiplier = getClimateValue(profile.climate);
+  const ageValue = AgeValue(profile.ageYears);
+  const activityMultiplier = ActivityLevelValue(profile.activityLevel);
+  const climateMultiplier = ClimateValue(profile.climate);
 
   const baseMl = profile.weightKg * genderValue;
 
@@ -79,5 +77,8 @@ export function getClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
   return roundedMl;
   }
   
+
+ 
+
 
 
