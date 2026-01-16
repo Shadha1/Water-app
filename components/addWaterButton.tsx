@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 
+import { updateHydrationNotifications } from "@/app/notifications";
 import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
 import { drink, tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 
@@ -35,7 +36,8 @@ export default function AddWaterButton({
       const next = await drink(ml); // erhöht + speichert + Snapshot zurück
       onSnapshot(next);             // UI updaten
 
-      // Trigger für Notifications
+      // Update Notification Settings
+      updateHydrationNotifications;
       if (onAfterChange) await onAfterChange(next);
     } finally {
       setBusy(false);

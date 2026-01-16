@@ -17,9 +17,11 @@ export function setupNotificationHandler() {
 export async function askNotificationPermission() {
   if (!Device.isDevice) return false;
 
+  //Berechtigung für Notifications abfragen
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
 
+  //Berechtigung für Notifications anfordern, wenn nicht vorhanden
   if (existingStatus !== "granted") {
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
@@ -35,7 +37,7 @@ export async function scheduleHourlyNotification() {
       body: "Du hast dein Tagesziel noch nicht erreicht.",
     },
     trigger: {
-      seconds: 3600,
+      seconds: 60,
       repeats: true,
       type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
     },
@@ -46,7 +48,7 @@ export async function clearNotifications() {
   return Notifications.cancelAllScheduledNotificationsAsync();
 }
 
-/** Das ist die Funktion, die du “einbettest”: entscheidet anhand aktueller Werte */
+// Funktion zum aktivieren oder deaktivieren der Notifications, abhängig davon ob das Ziel erreicht ist
 export async function updateHydrationNotifications() {
   const snap = tryGetWaterSnapshot();
 
@@ -60,4 +62,7 @@ export async function updateHydrationNotifications() {
     await scheduleHourlyNotification();
   }
   // else: Ziel erreicht -> keine Notifications
+  else{
+    clearNotifications;
+  }
 }
