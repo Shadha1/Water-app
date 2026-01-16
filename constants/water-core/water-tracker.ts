@@ -43,3 +43,17 @@ export function createWaterTracker(goalMl: number) {
   // Öffentliche API des Trackers
   return { drink, edit, getSnapshot };
 }
+
+//Mica:
+let currentTracker: ReturnType<typeof createWaterTracker> | null = null;
+
+// Inicializa el tracker global con un goal 
+export function initWaterTracker(goalMl: number) {
+  currentTracker = createWaterTracker(goalMl);
+  return currentTracker.getSnapshot();
+}
+
+// Devuelve snapshot si el tracker está inicializado, o null 
+export function tryGetWaterSnapshot(): WaterSnapshot | null {
+  return currentTracker ? currentTracker.getSnapshot() : null;
+}

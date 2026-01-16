@@ -1,48 +1,66 @@
-import {
-  calculateDailyWaterMl,
-  getActivityLevelValue,
-  getAgeValue,
-  getClimateValue,
-  getGenderValue,
-} from "@/constants/water-core/water-formula";
-import useUserData from "@/hooks/loadUser";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-//import { mockUserProfile } from '@/mocks/mockUserProfile';
 
-/** Debug Water Screen
- * Fetches the user profile from AsyncStorage and displays various calculated values for debugging purposes.
- */
+import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
+import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
+import useUserData from "@/hooks/loadUser";
 
-export default function DebugWaterScreen() {
-  /**  const genderValue = getGenderValue(mockUserProfile.gender);
-   *   const ageValue = getAgeValue(mockUserProfile.ageYears);
-   *   runWaterTrackerDebug();*/
-
-  // Get user profile from hook
+export default function DebugWater() {
   const { profile, loading } = useUserData();
-  if (loading || !profile) return null;
+  const [snap, setSnap] = useState<WaterSnapshot | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setError(null);
+
+    // Solange das Profil lädt, machen wir nichts.
+    if (loading) return;
+
+    // Wenn kein Profil existiert, ist Water erwartungsgemäß noch nicht initialisiert.
+    if (!profile) {
+      setSnap(null);
+      return;
+    }
+
+    // Profil existiert -> TabLayout sollte initWater(profile) bereits gemacht haben.
+    // Wir lesen nur den aktuellen Snapshot "safe".
+    try {
+      setSnap(tryGetWaterSnapshot());
+    } catch (e: any) {
+      setError(e?.message ?? String(e));
+    }
+  }, [loading, profile]);
+
+  if (loading) return null;
+
+  if (!profile) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Kein Profil gespeichert.</Text>
+        <Text style={styles.textSmall}>Bitte zuerst im Onboarding anlegen.</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Debug Water Screen</Text>
-      <Text style={styles.textSmall}>
-        genderValue: {getGenderValue(profile.gender)}
-      </Text>
-      <Text style={styles.textSmall}>
-        ageValue: {getAgeValue(profile.ageYears)}
-      </Text>
-      <Text style={styles.textSmall}>
-        activityLevelValue:{getActivityLevelValue(profile.activityLevel)}
-      </Text>
-      <Text style={styles.textSmall}>
-        climateValue: {getClimateValue(profile.climate)}
-      </Text>
-      <Text style={styles.textSmall}>
-        calculateDailyWaterMl: {calculateDailyWaterMl(profile)}
-      </Text>
-      <View>
-        <Text>Water Tracker Debug</Text>
-      </View>
+      {error && <Text style={styles.text}>Error: {error}</Text>}
+
+      {!error && !snap && (
+        <Text style={styles.text}>Water noch nicht initialisiert…</Text>
+      )}
+
+      {snap && (
+        <>
+          <Text style={styles.text}>goalMl: {snap.goalMl} ml</Text>
+          <Text style={styles.text}>consumedMl: {snap.consumedMl} ml</Text>
+          <Text style={styles.text}>remainingMl: {snap.remainingMl} ml</Text>
+
+          <Text style={styles.textSmall}>
+            Profil: {profile.name} ({profile.weightKg}kg, {profile.ageYears}y)
+          </Text>
+        </>
+      )}
     </View>
   );
 }
@@ -53,6 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#000",
+    gap: 10,
   },
   text: { color: "#fff", fontSize: 16 },
   textSmall: { color: "#fff", fontSize: 12, marginTop: 8 },

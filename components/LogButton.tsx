@@ -18,11 +18,14 @@ export default function LogButton({ onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-    button: {
-        position: "absolute",
-        bottom: 16,
-    },
+
     buttonText: {
         fontSize: 40,
+    },
+    button: {
+        position: "absolute",
+        bottom: 40,
+        left: "50%",
+        transform: [{ translateX: -30 }],
     },
 });

@@ -9,7 +9,7 @@ import type { Gender, UserProfileInput } from '@/constants/water-core/userProfil
 export function getGenderValue(gender: Gender): number {
   if (gender === 'male') {
     return 35;
-  }else if(gender === 'female') {
+  } else if (gender === 'female') {
     return 31;
   } else {
     return 33;
@@ -18,19 +18,19 @@ export function getGenderValue(gender: Gender): number {
 
 
 //Bedarf nach alter anpassen
-export function getAgeValue(ageYears: number): number {
+export function AgeValue(ageYears: number): number {
   if (ageYears <= 17) {
-    return 100;  
+    return 100;
   } else if (ageYears <= 30) {
-    return 0;  
+    return 0;
   } else if (ageYears <= 49) {
-    return -100;  
-    } else if (ageYears <59) {
-    return -100; 
-      } else if (ageYears <=69) {
-    return -200; 
+    return -100;
+  } else if (ageYears < 59) {
+    return -100;
+  } else if (ageYears <= 69) {
+    return -200;
   } else {
-    return -300;  
+    return -300;
   }
 }
 
@@ -38,46 +38,43 @@ export function getAgeValue(ageYears: number): number {
 
 
 // return werte müssen noch angepasst werden
-export function getActivityLevelValue(activityLevel: 'low' | 'moderate' | 'high'): number {
-    if (activityLevel === 'low') {
-      return 0.3;
-    } else if (activityLevel === 'moderate') {
-      return 0.7;
-    } else {
-      return 1.0;
-    }   
+export function ActivityLevelValue(activityLevel: 'low' | 'moderate' | 'high'): number {
+  if (activityLevel === 'low') {
+    return 0.3;
+  } else if (activityLevel === 'moderate') {
+    return 0.7;
+  } else {
+    return 1.0;
+  }
 }
 
 
-export function getClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
-    if (climate === 'cold') {
-      return 0.5;
-    } else if (climate === 'temperate') {
-      return 0.0;
-    } else {
-      return 1.0;
-    } 
+export function ClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
+  if (climate === 'cold') {
+    return 0.5;
+  } else if (climate === 'temperate') {
+    return 0.0;
+  } else {
+    return 1.0;
   }
+}
 
 
-  // Hauptfunktion zur Berechnung der täglichen Wasseraufnahme in ml noch unvollständig
+// Hauptfunktion zur Berechnung der täglichen Wasseraufnahme in ml noch unvollständig
 
-  export function calculateDailyWaterMl(profile: UserProfileInput): number {
+export function calculateDailyWaterMl(profile: UserProfileInput): number {
   const genderValue = getGenderValue(profile.gender);
-  const ageValue = getAgeValue(profile.ageYears);
-  const weightKg = profile.weightKg;
-  const ageYears = profile.ageYears;
-  const activityMultiplier = getActivityLevelValue(profile.activityLevel);
-  const climateMultiplier = getClimateValue(profile.climate);
+  const ageValue = AgeValue(profile.ageYears);
+  const activityMultiplier = ActivityLevelValue(profile.activityLevel);
+  const climateMultiplier = ClimateValue(profile.climate);
 
   const baseMl = profile.weightKg * genderValue;
 
   const totalMl =
-    baseMl +  ageValue + activityMultiplier + climateMultiplier ;
-    const roundedMl = Math.round(totalMl / 100) * 100;
+    baseMl + ageValue + activityMultiplier + climateMultiplier;
+  const roundedMl = Math.round(totalMl / 100) * 100;
 
   return roundedMl;
-  }
-  
+}
 
 

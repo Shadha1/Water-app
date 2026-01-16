@@ -2,6 +2,8 @@
 // Neutrale Domain-Typen für die Hydration-Logik.
 // Keine Imports aus UI, Storage oder mocks!
 
+
+
 export type ActivityLevel = "low" | "moderate" | "high";
 export type Climate = "cold" | "temperate" | "hot";
 
@@ -17,3 +19,8 @@ export interface UserProfileInput {
   activityLevel: ActivityLevel;
   climate: Climate;
 }
+
+
+
+// Wasserbedarf
+//Noch zu trinken heute
