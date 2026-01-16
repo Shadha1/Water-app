@@ -87,8 +87,9 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 24,
-    marginBottom: 20,
-    marginTop: 180,
+    top: 250,
+    // marginBottom: 20,
+    //marginTop: 180,
     color: "#27598E", //"#2c5f7c",
     fontFamily: "serif",
     textAlign: "center",
@@ -105,8 +106,9 @@ const styles = StyleSheet.create({
     //top: 300, // ajustar según notch. Mas pequeno, más pegado al borde.
     //left: 200,
     //alignItems: "center",
-    marginTop: -80,       // baja el GIF respecto al texto
-    marginBottom: 40, // espacio entre GIF y botones
+    //marginTop: -80,       // baja el GIF respecto al texto
+    //marginBottom: 40, // espacio entre GIF y botones
+    top: 200,
     alignSelf: "center", // centra horizontalmente
     width: 300,
     height: 300,
