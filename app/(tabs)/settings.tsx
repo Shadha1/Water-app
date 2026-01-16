@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginTop: 20,
     marginBottom: 18,
-    color: "#0b3b4a",
+    color: "#27598E", //"#2c5f7c",
+    fontFamily: "serif"
   },
   section: {
     width: "100%",
@@ -77,16 +78,18 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: "#2c5f7c",
+    color: "#27598E",
     marginBottom: 6,
+    fontFamily: "sans-serif",
   },
   value: {
     fontSize: 16,
-    color: "#0b3b4a",
+    color: "#27598E",
+    fontFamily: "sans-serif",
   },
   button: {
     width: "100%",
-    backgroundColor: "#2c5f7c",
+    backgroundColor: "#27598E",
     paddingVertical: 12,
     borderRadius: 20,
     alignItems: "center",
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+    fontFamily: "sans-serif",
   },
   deleteButton: {
     backgroundColor: "transparent",
@@ -104,11 +108,12 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     color: "#b82b2b",
+    fontFamily: "sans-serif",
   },
   smallLink: {
     marginTop: 16,
   },
   smallLinkText: {
-    color: "#0b5b77",
+    color: "#27598E",
   },
 });
