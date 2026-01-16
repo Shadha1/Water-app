@@ -1,12 +1,8 @@
-// addWaterButton.tsx
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 
 import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
-import {
-  drink,
-  tryGetWaterSnapshot,
-} from "@/constants/water-core/waterService";
+import { edit, tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 
 type Props = {
   ml: number;
@@ -17,7 +13,7 @@ type Props = {
   style?: ViewStyle;
 };
 
-export default function AddWaterButton({
+export default function ResetWaterButton({
   ml,
   onSnapshot,
   onAfterChange,
@@ -35,7 +31,7 @@ export default function AddWaterButton({
 
     setBusy(true);
     try {
-      const next = await drink(ml); // erhöht + speichert + Snapshot zurück
+      const next = await edit(ml); // Wasserstand anpassen
       onSnapshot(next); // UI updaten
 
       // Trigger für Notifications
@@ -57,7 +53,7 @@ export default function AddWaterButton({
       ]}
     >
       <Text style={styles.text}>
-        {label ?? `+ ${ml} ml`}
+        {label ?? `Reset to ${ml} ml`}
         {busy ? " …" : ""}
       </Text>
     </Pressable>

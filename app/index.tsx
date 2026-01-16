@@ -1,27 +1,17 @@
+import ConfirmButton from "@/components/ConfirmButton";
 import { defaultForm, FormFields } from "@/constants/water-core/userForm";
 import useUserData from "@/hooks/loadUser";
 import { saveUserProfile } from "@/hooks/userStorage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Image, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Index() {
-
-  //Temporär: Nur um die Registration Seite sehen su können:
+  /*Temporär: Nur um die Registration Seite sehen su können:
   useEffect(() => {
     AsyncStorage.clear();
-  }, []);
-
+  }, []);*/
 
   //Initializes the form state with default values
   const [form, setForm] = useState<FormFields>(defaultForm);
@@ -141,9 +131,7 @@ export default function Index() {
           </Picker>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={saveData}>
-          <Text style={styles.buttonText}>Confirm</Text>
-        </TouchableOpacity>
+        <ConfirmButton onPress={saveData} />
       </View>
     </View>
   );
@@ -156,8 +144,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     marginBottom: 12,
-    height: 40,//altura de los campos de selección
-    justifyContent: "center", // centra el texto 
+    height: 40, //altura de los campos de selección
+    justifyContent: "center", // centra el texto
   },
   container: {
     flex: 1,
@@ -176,7 +164,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#fff",
     borderRadius: 6,
-    paddingVertical: 4,  // reduce el padding vertical osea los kasten de inputs
+    paddingVertical: 4, // reduce el padding vertical osea los kasten de inputs
     paddingHorizontal: 10,
     //padding: 10,
     marginBottom: 12,

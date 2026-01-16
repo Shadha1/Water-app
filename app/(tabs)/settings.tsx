@@ -1,3 +1,4 @@
+import BackButton from "@/components/BackButton";
 import useUserData from "@/hooks/loadUser";
 import { deleteUserProfile } from "@/hooks/userStorage";
 import { router } from "expo-router";
@@ -46,9 +47,7 @@ export default function SettingsScreen() {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.smallLink} onPress={() => router.back()}>
-        <Text style={styles.smallLinkText}>Back</Text>
-      </TouchableOpacity>
+      <BackButton onPress={() => router.replace("/(tabs)/home")} />
     </View>
   );
 }
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 18,
     color: "#27598E", //"#2c5f7c",
-    fontFamily: "serif"
+    fontFamily: "serif",
   },
   section: {
     width: "100%",

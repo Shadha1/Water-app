@@ -6,7 +6,10 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Tabs } from "expo-router";
 import React, { useEffect } from "react";
 
-import { initWater, tryGetWaterSnapshot } from "@/constants/water-core/waterService";
+import {
+  initWater,
+  tryGetWaterSnapshot,
+} from "@/constants/water-core/waterService";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -29,20 +32,11 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          tabBarIcon: ({ color }: { color: string }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
         }}
       />
@@ -53,6 +47,19 @@ export default function TabLayout() {
           tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol size={28} name="gear" color={color} />
           ),
+        }}
+      />
+      {/**Hidden Screens */}
+      <Tabs.Screen
+        name="settings"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="water-log"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

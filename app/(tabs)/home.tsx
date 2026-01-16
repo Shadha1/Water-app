@@ -2,18 +2,17 @@ import GearButton from "@/components/GearButton";
 import useUserData from "@/hooks/loadUser";
 import { router } from "expo-router";
 //import React from "react";
-import { StyleSheet, Text, View, Image, Animated } from "react-native";
-import React, { useEffect, useRef } from "react";
 import LogButton from "@/components/LogButton";
 import { tryGetWaterSnapshot } from "@/constants/water-core/water-tracker";
-
+import React, { useEffect, useRef } from "react";
+import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
 export default function Home() {
   const { profile, loading } = useUserData(); // get profile from hook
 
-
   const snapshot = tryGetWaterSnapshot();
-  const progress = snapshot && snapshot.goalMl > 0 ? snapshot.consumedMl / snapshot.goalMl : 0;
+  const progress =
+    snapshot && snapshot.goalMl > 0 ? snapshot.consumedMl / snapshot.goalMl : 0;
   //const progress = snapshot ? snapshot.consumedMl / snapshot.goalMl : 0;
   const animatedHeight = useRef(new Animated.Value(0)).current;
   //progress * 200
@@ -45,11 +44,9 @@ export default function Home() {
       {/* GIF a la izquierda */}
       <Image source={selectGif()} style={styles.gif} />
 
-
       <GearButton onPress={() => router.push("./settings")} />
-      <LogButton onPress={() => router.push("./log-water")} />
+      <LogButton onPress={() => router.push("./water-log")} />
       <Text style={styles.title}>Hello {profile?.name}</Text>
-
 
       {/* Barra vertical a la derecha */}
       <View style={styles.barContainer}>
@@ -76,6 +73,12 @@ const styles = StyleSheet.create({
     marginLeft: -60,
     position: "absolute",
   },
+  barFill: {
+    width: "100%",
+    backgroundColor: "#27598E",
+    position: "absolute",
+    bottom: 0,
+  },
   barContainer: {
     width: 30,
     height: 300,
@@ -84,14 +87,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "flex-end", // relleno desde abajo
     marginLeft: 240,
+  },
 
-  },
-  barFill: {
-    width: "100%",
-    backgroundColor: "#27598E",
-    position: "absolute",
-    bottom: 0,
-  },
   title: {
     position: "absolute",
     fontSize: 24,
