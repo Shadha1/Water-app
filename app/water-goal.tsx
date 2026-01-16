@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#e6f0f2",
     paddingHorizontal: 20,
     paddingTop: 200, //bajar el texto (antes 80)
-    justifyContent: "space-between", // espacio entre texto y botones
+    justifyContent: "flex-start",//"space-between", // espacio entre texto y botones
   },
   title: {
     fontSize: 24,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontWeight: "400", //600 needed?
   },
   label: {
-    fontSize: 24,
+    fontSize: 20,
     top: 250,
     // marginBottom: 20,
     //marginTop: 180,
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", // botones en fila
     justifyContent: "space-between", // flecha a la izquierda, confirm a la derecha
     alignItems: "center",
+    marginTop: 400,     // espacio desde el texto/GIF
     marginBottom: 40, // separa los botones del borde inferior
 
   },

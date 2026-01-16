@@ -156,6 +156,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     marginBottom: 12,
+    height: 40,//altura de los campos de selección
+    justifyContent: "center", // centra el texto 
   },
   container: {
     flex: 1,
@@ -174,7 +176,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#fff",
     borderRadius: 6,
-    padding: 10,
+    paddingVertical: 4,  // reduce el padding vertical osea los kasten de inputs
+    paddingHorizontal: 10,
+    //padding: 10,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#ccc",
