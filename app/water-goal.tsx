@@ -46,35 +46,7 @@ const styles = StyleSheet.create({
     paddingTop: 200, //bajar el texto (antes 80)
     justifyContent: "flex-start", //"space-between", // espacio entre texto y botones
   },
-  title: {
-    fontSize: 24,
-    marginTop: 60,
-    marginBottom: 20,
-  },
-  button: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 10, // 6, // altura (antes 12)
-    paddingHorizontal: 20, //12, // ancho controlado
-    borderRadius: 14, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
-  buttonBack: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 10, //6, // altura (antes 12)
-    paddingHorizontal: 20, //12, // ancho controlado
-    borderRadius: 100, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 20, //16,
-    fontFamily: "sans-serif",
-    fontWeight: "400", //600 needed?
-  },
+
   label: {
     fontSize: 20,
     top: 250,

@@ -175,27 +175,12 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif", //"Inder"
     color: "#27598E",
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 6, // altura (antes 12)
-    paddingHorizontal: 12, // ancho controlado
-    borderRadius: 14, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 20, //16,
-    fontFamily: "sans-serif",
-    fontWeight: "400", //600 needed?
-  },
+
   title: {
     fontSize: 40,
     fontFamily: "serif", // Jacques Francois Shadow real
     textAlign: "center",
     color: "#27598E", //#D6E4E5
-
     marginBottom: 30,
     textShadowColor: "#00001c", //sombra
     textShadowOffset: { width: 1, height: 0 },

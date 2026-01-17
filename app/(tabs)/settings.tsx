@@ -1,4 +1,5 @@
 import BackButton from "@/components/BackButton";
+import { clearConsumedMl } from "@/constants/water-core/water-storage";
 import useUserData from "@/hooks/loadUser";
 import { deleteUserProfile } from "@/hooks/userStorage";
 import { router } from "expo-router";
@@ -21,10 +22,11 @@ export default function SettingsScreen() {
           style: "destructive",
           onPress: async () => {
             await deleteUserProfile();
+            await clearConsumedMl();
             router.replace("/"); // Navigate back to the profile setup screen
           },
         },
-      ]
+      ],
     );
   }
 
@@ -108,11 +110,5 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: "#b82b2b",
     fontFamily: "sans-serif",
-  },
-  smallLink: {
-    marginTop: 16,
-  },
-  smallLinkText: {
-    color: "#27598E",
   },
 });

@@ -3,7 +3,7 @@ import useUserData from "@/hooks/loadUser";
 import { router } from "expo-router";
 //import React from "react";
 import LogButton from "@/components/LogButton";
-import { tryGetWaterSnapshot } from "@/constants/water-core/water-tracker";
+import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 import React, { useEffect, useRef } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
