@@ -48,8 +48,9 @@ export default function SettingsScreen() {
           Delete profile
         </Text>
       </TouchableOpacity>
-
-      <BackButton onPress={() => router.replace("/(tabs)/home")} />
+      <View style={styles.buttonback}>
+        <BackButton onPress={() => router.replace("/(tabs)/home")} />
+      </View>
     </View>
   );
 }
@@ -110,5 +111,10 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: "#b82b2b",
     fontFamily: "sans-serif",
+  },
+  buttonback: {
+    position: "absolute",
+    bottom: 80, // más abajo o ajusta según quieras
+    right: 130, // derecha
   },
 });

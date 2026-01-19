@@ -4,18 +4,20 @@ import { router } from "expo-router";
 //import React from "react";
 import LogButton from "@/components/LogButton";
 import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
+import ResetWaterButton from "@/components/ResetButton";
 
 export default function Home() {
   const { profile, loading } = useUserData(); // get profile from hook
 
   const snapshot = tryGetWaterSnapshot();
+
   const progress =
-    snapshot && snapshot.goalMl > 0 ? snapshot.consumedMl / snapshot.goalMl : 0;
-  //const progress = snapshot ? snapshot.consumedMl / snapshot.goalMl : 0;
+    snapshot && snapshot.goalMl > 0 ? Math.min(1, snapshot.consumedMl / snapshot.goalMl) : 0;
+
   const animatedHeight = useRef(new Animated.Value(0)).current;
-  //progress * 200
+
   useEffect(() => {
     Animated.timing(animatedHeight, {
       toValue: progress * 300,
@@ -28,14 +30,15 @@ export default function Home() {
 
   const now = new Date();
   const isEndOfDay = now.getHours() >= 23 && now.getMinutes() >= 59; // ejemplo: después de las 23:00
-  // const [isEndOfDay, setIsEndOfDay] = useState(false);
 
-  // función para seleccionar GIF según estado
   const selectGif = () => {
-    if (!isEndOfDay) return require("../../assets/images/gif_standard.gif");
-    return progress >= 1
-      ? require("../../assets/images/gif_success.gif")
-      : require("../../assets/images/gif_fail.gif");
+    if (progress >= 1) {
+      return require("../../assets/images/gif_success.gif"); // meta alcanzada
+    }
+    if (isEndOfDay) {
+      return require("../../assets/images/gif_fail.gif"); // fin del día sin meta
+    }
+    return require("../../assets/images/gif_standard.gif"); // resto del día
   };
 
   // Mica's teil
@@ -46,12 +49,14 @@ export default function Home() {
 
       <GearButton onPress={() => router.push("./settings")} />
       <LogButton onPress={() => router.push("./water-log")} />
+
       <Text style={styles.title}>Hello {profile?.name}</Text>
 
       {/* Barra vertical a la derecha */}
       <View style={styles.barContainer}>
         <Animated.View style={[styles.barFill, { height: animatedHeight }]} />
       </View>
+      <ResetWaterButton ml={0} onSnapshot={() => { }} />
     </View>
   );
 }
@@ -80,10 +85,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   barContainer: {
-    width: 30,
+    width: 40,
     height: 300,
     backgroundColor: "#ccc",
-    borderRadius: 10,
+    borderRadius: 20,
     overflow: "hidden",
     justifyContent: "flex-end", // relleno desde abajo
     marginLeft: 240,

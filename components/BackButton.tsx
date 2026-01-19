@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
 
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    bottom: 80,
-    left: "52%",
+    //position: "absolute",
+    //bottom: 80,
+    //left: "52%",
     transform: [{ translateX: -30 }],
+
     backgroundColor: "#27598E",
 
     width: 40,      // más pequeño

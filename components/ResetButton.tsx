@@ -62,12 +62,15 @@ export default function ResetWaterButton({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#000000",
     backgroundColor: "transparent",
+    position: "absolute",
+    bottom: 200, // distancia desde la parte inferior
+    left: 60,   // distancia desde la izquierda
   },
   buttonPressed: {
     opacity: 0.8,

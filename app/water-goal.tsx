@@ -29,8 +29,10 @@ export default function WaterGoal() {
       </Text>
 
       {/* Botones en fila */}
-      <View style={styles.buttonRow}>
+      <View style={styles.buttonback}>
         <BackButton onPress={() => router.back()} />
+      </View>
+      <View style={styles.buttonconfirm}>
         <ConfirmButton onPress={() => router.replace("./(tabs)/home")} />
       </View>
     </View>
@@ -56,13 +58,7 @@ const styles = StyleSheet.create({
     fontFamily: "serif",
     textAlign: "center",
   },
-  buttonRow: {
-    flexDirection: "row", // botones en fila
-    justifyContent: "space-between", // flecha a la izquierda, confirm a la derecha
-    alignItems: "center",
-    marginTop: 400, // espacio desde el texto/GIF
-    marginBottom: 40, // separa los botones del borde inferior
-  },
+
   gif: {
     position: "absolute", //así no afecta lo demás
     //top: 300, // ajustar según notch. Mas pequeno, más pegado al borde.
@@ -74,5 +70,17 @@ const styles = StyleSheet.create({
     alignSelf: "center", // centra horizontalmente
     width: 300,
     height: 300,
+
+  },
+  buttonconfirm: {
+    position: "absolute",
+    bottom: 80,
+    left: 240, // izquierda
+  },
+
+  buttonback: {
+    position: "absolute",
+    bottom: 80, // más abajo o ajusta según quieras
+    right: 250, // derecha
   },
 });

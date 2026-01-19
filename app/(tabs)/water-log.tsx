@@ -51,11 +51,13 @@ export default function LogWater() {
           <AddWaterButton ml={250} onSnapshot={(next) => setSnap(next)} />
           <AddWaterButton ml={500} onSnapshot={(next) => setSnap(next)} />
 
-          <ResetWaterButton ml={0} onSnapshot={() => { }} />
+
         </>
       )}
       <ConfirmButton onPress={() => router.replace("./home")} />
-      <BackButton onPress={() => router.replace("./home")} />
+      <View style={styles.buttonback}>
+        <BackButton onPress={() => router.replace("./home")} />
+      </View>
     </View>
   );
 }
@@ -86,5 +88,10 @@ const styles = StyleSheet.create({
     color: "#ff0000",
     fontSize: 14,
     marginBottom: 10,
+  },
+  buttonback: {
+    position: "absolute",
+    bottom: 80, // más abajo o ajusta según quieras
+    right: 130, // derecha
   },
 });
