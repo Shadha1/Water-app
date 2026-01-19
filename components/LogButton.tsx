@@ -20,12 +20,23 @@ export default function LogButton({ onPress }: Props) {
 const styles = StyleSheet.create({
 
     buttonText: {
-        fontSize: 40,
+        fontSize: 50,
+        color: "#fff",
+
+        textAlign: "center",
+        lineHeight: 60,
     },
     button: {
         position: "absolute",
         bottom: 40,
-        left: "50%",
+        left: "55%",
         transform: [{ translateX: -30 }],
+        backgroundColor: "#27598E",
+
+        width: 60,      // más pequeño
+        height: 60,     // más pequeño
+        borderRadius: 30, // mitad del width/height → círculo perfecto
+
+
     },
 });

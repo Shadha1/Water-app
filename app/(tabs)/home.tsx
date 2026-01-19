@@ -18,7 +18,7 @@ export default function Home() {
   //progress * 200
   useEffect(() => {
     Animated.timing(animatedHeight, {
-      toValue: progress * 200,
+      toValue: progress * 300,
       duration: 500,
       useNativeDriver: false,
     }).start();
@@ -27,7 +27,7 @@ export default function Home() {
   if (loading || !profile) return null;
 
   const now = new Date();
-  const isEndOfDay = now.getHours() === 0 && now.getMinutes() === 0; // ejemplo: después de las 23:00
+  const isEndOfDay = now.getHours() >= 23 && now.getMinutes() >= 59; // ejemplo: después de las 23:00
   // const [isEndOfDay, setIsEndOfDay] = useState(false);
 
   // función para seleccionar GIF según estado

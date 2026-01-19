@@ -16,19 +16,39 @@ export default function BackButton({ onPress }: Props) {
 }
 
 const styles = StyleSheet.create({
-  buttonBack: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 10, //6, // altura (antes 12)
-    paddingHorizontal: 20, //12, // ancho controlado
-    borderRadius: 100, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
+
   buttonText: {
+    fontSize: 45,
     color: "#fff",
-    fontSize: 20, //16,
+
+    textAlign: "center",
+    lineHeight: 40,
+    // color: "#fff",
+    // fontSize: 30, //16,
     fontFamily: "sans-serif",
-    fontWeight: "400", //600 needed?
+    transform: [{ translateY: -10 }],
+
+    // //fontWeight: "400", //600 needed?
+    // textAlign: "center",
+
+    // lineHeight: 34,            // 👈 mayor que fontSize
+    // includeFontPadding: false // 👈 CLAVE Android
+
+  },
+  buttonBack: {
+
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 80,
+    left: "52%",
+    transform: [{ translateX: -30 }],
+    backgroundColor: "#27598E",
+
+    width: 40,      // más pequeño
+    height: 40,     // más pequeño
+    borderRadius: 20, // mitad del width/height :círculo perfecto   
+
   },
 });
+
