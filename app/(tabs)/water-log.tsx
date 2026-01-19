@@ -51,7 +51,7 @@ export default function LogWater() {
           <AddWaterButton ml={250} onSnapshot={(next) => setSnap(next)} />
           <AddWaterButton ml={500} onSnapshot={(next) => setSnap(next)} />
 
-          <ResetWaterButton ml={0} onSnapshot={() => {}} />
+          <ResetWaterButton ml={0} onSnapshot={() => { }} />
         </>
       )}
       <ConfirmButton onPress={() => router.replace("./home")} />
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
     gap: 10,
+    backgroundColor: "#dfeff0",
   },
   title: {
     fontSize: 28,
