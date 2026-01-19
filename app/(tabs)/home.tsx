@@ -7,9 +7,11 @@ import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
 import ResetWaterButton from "@/components/ResetButton";
+import { WaterSnapshot } from "@/constants/water-core/water-tracker";
 
 export default function Home() {
   const { profile, loading } = useUserData(); // get profile from hook
+
 
   const snapshot = tryGetWaterSnapshot();
 
