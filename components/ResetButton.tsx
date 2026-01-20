@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000000",
     backgroundColor: "transparent",
-    position: "absolute",
-    bottom: 200, // distancia desde la parte inferior
-    left: 60,   // distancia desde la izquierda
+    //position: "absolute",
+    //bottom: 200, // distancia desde la parte inferior
+    //left: 60,   // distancia desde la izquierda
   },
   buttonPressed: {
     opacity: 0.8,

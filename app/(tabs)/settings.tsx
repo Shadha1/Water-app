@@ -1,5 +1,6 @@
 import BackButton from "@/components/BackButton";
 import { clearConsumedMl } from "@/constants/water-core/water-storage";
+import { resetWater } from "@/constants/water-core/waterService";
 import useUserData from "@/hooks/loadUser";
 import { deleteUserProfile } from "@/hooks/userStorage";
 import { router } from "expo-router";
@@ -14,16 +15,32 @@ export default function SettingsScreen() {
   async function handleDeleteProfile() {
     Alert.alert(
       "Delete profile",
-      "This will delete your profile and reset consumed water. This action cannot be undone. Continue?",
+      "This will delete your profile and reset all water tracking data. This action cannot be undone.  Continue?",
       [
         { text: "Cancel", style: "cancel" },
         {
           text: "Delete",
           style: "destructive",
           onPress: async () => {
-            await deleteUserProfile();
-            await clearConsumedMl();
-            router.replace("/"); // Navigate back to the profile setup screen
+            try {
+              // 1. Clear consumed water from storage first
+              await clearConsumedMl();
+
+              // 2. Delete user profile from storage
+              await deleteUserProfile();
+
+              // 3. Reset the in-memory water session (CRITICAL - do this BEFORE navigation)
+              resetWater();
+
+              // 4. Navigate back to registration screen
+              router.replace("/");
+            } catch (error) {
+              Alert.alert(
+                "Error",
+                "Failed to delete profile.  Please try again.",
+              );
+              console.error("Delete profile error:", error);
+            }
           },
         },
       ],
@@ -40,14 +57,16 @@ export default function SettingsScreen() {
         <Text style={styles.value}>{profile?.name}</Text>
       </View>
 
-      <TouchableOpacity
-        style={[styles.button, styles.deleteButton]}
-        onPress={handleDeleteProfile}
-      >
-        <Text style={[styles.buttonText, styles.deleteButtonText]}>
-          Delete profile
-        </Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          style={[styles.button, styles.deleteButton]}
+          onPress={handleDeleteProfile}
+        >
+          <Text style={[styles.buttonText, styles.deleteButtonText]}>
+            Delete profile
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.buttonback}>
         <BackButton onPress={() => router.replace("/(tabs)/home")} />
       </View>
@@ -109,12 +128,13 @@ const styles = StyleSheet.create({
     borderColor: "#b82b2b",
   },
   deleteButtonText: {
+    paddingHorizontal: 10,
     color: "#b82b2b",
     fontFamily: "sans-serif",
   },
   buttonback: {
     position: "absolute",
-    bottom: 80, // más abajo o ajusta según quieras
-    right: 130, // derecha
+    bottom: 80,
+    right: 130,
   },
 });

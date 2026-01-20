@@ -51,7 +51,7 @@ export default function LogWater() {
           <AddWaterButton ml={250} onSnapshot={(next) => setSnap(next)} />
           <AddWaterButton ml={500} onSnapshot={(next) => setSnap(next)} />
 
-
+          <ResetWaterButton ml={0} onSnapshot={() => {}} />
         </>
       )}
       <ConfirmButton onPress={() => router.replace("./home")} />

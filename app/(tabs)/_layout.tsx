@@ -43,10 +43,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="debug-water"
         options={{
-          title: "Debug Water",
+          /*title: "Debug Water",
           tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol size={28} name="gear" color={color} />
-          ),
+          ),*/
+          href: null,
         }}
       />
       {/**Hidden Screens */}

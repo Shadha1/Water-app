@@ -4,19 +4,18 @@ import { router } from "expo-router";
 //import React from "react";
 import LogButton from "@/components/LogButton";
 import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
-import ResetWaterButton from "@/components/ResetButton";
-import { WaterSnapshot } from "@/constants/water-core/water-tracker";
 
 export default function Home() {
   const { profile, loading } = useUserData(); // get profile from hook
 
-
   const snapshot = tryGetWaterSnapshot();
 
   const progress =
-    snapshot && snapshot.goalMl > 0 ? Math.min(1, snapshot.consumedMl / snapshot.goalMl) : 0;
+    snapshot && snapshot.goalMl > 0
+      ? Math.min(1, snapshot.consumedMl / snapshot.goalMl)
+      : 0;
 
   const animatedHeight = useRef(new Animated.Value(0)).current;
 
@@ -58,7 +57,6 @@ export default function Home() {
       <View style={styles.barContainer}>
         <Animated.View style={[styles.barFill, { height: animatedHeight }]} />
       </View>
-      <ResetWaterButton ml={0} onSnapshot={() => { }} />
     </View>
   );
 }
