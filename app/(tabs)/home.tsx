@@ -41,7 +41,15 @@ export default function Home() {
     }
     return require("../../assets/images/gif_standard.gif"); // resto del día
   };
+  //Wasser-text
+  const formatWaterAmount = (ml: number) => {
+    if (ml >= 1000) return `${(ml / 1000).toFixed(1)} L`; // litros con 1 decimal
+    return `${ml} ml`; // ml si es menos de 1L
+  };
 
+  const consumedText = snapshot
+    ? `${formatWaterAmount(snapshot.consumedMl)} / ${formatWaterAmount(snapshot.goalMl)}`
+    : `0 ml / 0 ml`;
   // Mica's teil
   return (
     <View style={styles.container}>
@@ -53,9 +61,14 @@ export default function Home() {
 
       <Text style={styles.title}>Hello {profile?.name}</Text>
 
-      {/* Barra vertical a la derecha */}
-      <View style={styles.barContainer}>
-        <Animated.View style={[styles.barFill, { height: animatedHeight }]} />
+
+      <View style={styles.barWrapper}>{/* Barra vertical + texto abajo */}
+        {/* Barra vertical a la derecha */}
+        <View style={styles.barContainer}>
+          <Animated.View style={[styles.barFill, { height: animatedHeight }]} />
+        </View>
+        {/* Texto de progreso abajo de la barra */}
+        <Text style={styles.progressText}>{consumedText}</Text>
       </View>
     </View>
   );
@@ -84,6 +97,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
+  progressText: {
+    marginTop: 8,
+    fontSize: 20,
+    color: "#27598E",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "serif",
+  },
+  barWrapper: {
+    width: 60,           // espacio para la barra y texto
+    alignItems: "center", // centrar barra y texto
+    marginLeft: 240,
+
+  },
   barContainer: {
     width: 40,
     height: 300,
@@ -91,7 +118,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
     justifyContent: "flex-end", // relleno desde abajo
-    marginLeft: 240,
+    //marginLeft: 240,
+    marginTop: 8,
   },
 
   title: {
