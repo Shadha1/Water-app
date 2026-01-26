@@ -58,7 +58,7 @@ export function ClimateValue(climate: 'cold' | 'temperate' | 'hot'): number {
       return 1.0;
     } 
   }
-}
+
 
 
 // Hauptfunktion zur Berechnung der täglichen Wasseraufnahme in ml noch unvollständig
