@@ -14,6 +14,7 @@ export default function LogWater() {
   const { profile, loading } = useUserData();
   const [snap, setSnap] = useState<WaterSnapshot | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedMl, setSelectedMl] = useState<number | null>(null);
 
   useEffect(() => {
     setError(null);
@@ -46,12 +47,12 @@ export default function LogWater() {
 
       {snap && (
         <>
-          <AddWaterButton ml={50} onSnapshot={(next) => setSnap(next)} />
-          <AddWaterButton ml={100} onSnapshot={(next) => setSnap(next)} />
-          <AddWaterButton ml={250} onSnapshot={(next) => setSnap(next)} />
-          <AddWaterButton ml={500} onSnapshot={(next) => setSnap(next)} />
+          <AddWaterButton ml={50} selected={selectedMl === 50} onSnapshot={(next) => { setSelectedMl(50); setSnap(next); }} />
+          <AddWaterButton ml={100} selected={selectedMl === 100} onSnapshot={(next) => { setSelectedMl(100); setSnap(next); }} />
+          <AddWaterButton ml={250} selected={selectedMl === 250} onSnapshot={(next) => { setSelectedMl(250); setSnap(next); }} />
+          <AddWaterButton ml={500} selected={selectedMl === 500} onSnapshot={(next) => { setSelectedMl(500); setSnap(next); }} />
 
-          <ResetWaterButton ml={0} onSnapshot={() => {}} />
+          <ResetWaterButton ml={0} onSnapshot={() => { }} />
         </>
       )}
       <ConfirmButton onPress={() => router.replace("./home")} />
