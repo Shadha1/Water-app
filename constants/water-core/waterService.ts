@@ -11,7 +11,6 @@ export async function initWater(profile: UserProfileInput): Promise<WaterSnapsho
   return session.tracker.getSnapshot();
 }
 
-
 /** Für UI: kein Crash, wenn Water noch nicht initialisiert ist */
 export function tryGetWaterSnapshot(): WaterSnapshot | null {
   return session ? session.tracker.getSnapshot() : null;

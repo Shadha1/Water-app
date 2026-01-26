@@ -1,27 +1,17 @@
+import ConfirmButton from "@/components/ConfirmButton";
 import { defaultForm, FormFields } from "@/constants/water-core/userForm";
 import useUserData from "@/hooks/loadUser";
 import { saveUserProfile } from "@/hooks/userStorage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Image, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Index() {
-
-  //Temporär: Nur um die Registration Seite sehen su können:
+  /*Temporär: Nur um die Registration Seite sehen su können:
   useEffect(() => {
     AsyncStorage.clear();
-  }, []);
-
+  }, []);*/
 
   //Initializes the form state with default values
   const [form, setForm] = useState<FormFields>(defaultForm);
@@ -141,9 +131,7 @@ export default function Index() {
           </Picker>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={saveData}>
-          <Text style={styles.buttonText}>Confirm</Text>
-        </TouchableOpacity>
+        <ConfirmButton onPress={saveData} />
       </View>
     </View>
   );
@@ -156,6 +144,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     marginBottom: 12,
+    height: 40, //altura de los campos de selección
+    justifyContent: "center", // centra el texto
   },
   container: {
     flex: 1,
@@ -174,7 +164,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#fff",
     borderRadius: 6,
-    padding: 10,
+    paddingVertical: 4, // reduce el padding vertical osea los kasten de inputs
+    paddingHorizontal: 10,
+    //padding: 10,
     marginBottom: 12,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -183,27 +175,12 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif", //"Inder"
     color: "#27598E",
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 6, // altura (antes 12)
-    paddingHorizontal: 12, // ancho controlado
-    borderRadius: 14, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 20, //16,
-    fontFamily: "sans-serif",
-    fontWeight: "400", //600 needed?
-  },
+
   title: {
     fontSize: 40,
     fontFamily: "serif", // Jacques Francois Shadow real
     textAlign: "center",
     color: "#27598E", //#D6E4E5
-
     marginBottom: 30,
     textShadowColor: "#00001c", //sombra
     textShadowOffset: { width: 1, height: 0 },

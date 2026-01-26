@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#000",
+    backgroundColor: "#D6E4E5",
     gap: 10,
   },
-  text: { color: "#fff", fontSize: 16 },
-  textSmall: { color: "#fff", fontSize: 12, marginTop: 8 },
+  text: { color: "#27598E", fontSize: 24, fontFamily: "sans-serif" },
+  textSmall: { color: "#27598E", fontSize: 20, marginTop: 8, fontFamily: "sans" },
 });

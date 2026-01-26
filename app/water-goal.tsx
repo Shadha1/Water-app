@@ -1,8 +1,9 @@
+import BackButton from "@/components/BackButton";
+import ConfirmButton from "@/components/ConfirmButton";
 import { calculateDailyWaterMl } from "@/constants/water-core/water-index";
 import useUserData from "@/hooks/loadUser";
 import { router } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 /** Water Goal Screen
  * Fetches the user profile from AsyncStorage, calculates the daily water intake,
@@ -28,22 +29,13 @@ export default function WaterGoal() {
       </Text>
 
       {/* Botones en fila */}
-      <View style={styles.buttonRow}>
-        <TouchableOpacity
-          style={styles.buttonBack}
-          onPress={() => router.back()}
-        >
-          <Text style={styles.buttonText}>←</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => router.replace("/(tabs)/home")}
-        >
-          <Text style={styles.buttonText}>Confirm</Text>
-        </TouchableOpacity>
+      <View style={styles.buttonback}>
+        <BackButton onPress={() => router.back()} />
       </View>
-    </View >
+      <View style={styles.buttonconfirm}>
+        <ConfirmButton onPress={() => router.replace("./(tabs)/home")} />
+      </View>
+    </View>
   );
 }
 
@@ -54,61 +46,41 @@ const styles = StyleSheet.create({
     backgroundColor: "#e6f0f2",
     paddingHorizontal: 20,
     paddingTop: 200, //bajar el texto (antes 80)
-    justifyContent: "space-between", // espacio entre texto y botones
+    justifyContent: "flex-start", //"space-between", // espacio entre texto y botones
   },
-  title: {
-    fontSize: 24,
-    marginTop: 60,
-    marginBottom: 20,
-  },
-  button: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 10,// 6, // altura (antes 12)
-    paddingHorizontal: 20,//12, // ancho controlado
-    borderRadius: 14, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
-  buttonBack: {
-    marginTop: 20,
-    backgroundColor: "#27598E", //"#2c5f7c",
-    paddingVertical: 10,//6, // altura (antes 12)
-    paddingHorizontal: 20,//12, // ancho controlado
-    borderRadius: 100, //20
-    alignItems: "center",
-    alignSelf: "center", //clave
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 20, //16,
-    fontFamily: "sans-serif",
-    fontWeight: "400", //600 needed?
-  },
+
   label: {
-    fontSize: 24,
-    marginBottom: 20,
-    marginTop: 180,
+    fontSize: 20,
+    top: 250,
+    // marginBottom: 20,
+    //marginTop: 180,
     color: "#27598E", //"#2c5f7c",
     fontFamily: "serif",
     textAlign: "center",
   },
-  buttonRow: {
-    flexDirection: "row", // botones en fila
-    justifyContent: "space-between", // flecha a la izquierda, confirm a la derecha
-    alignItems: "center",
-    marginBottom: 40, // separa los botones del borde inferior
 
-  },
   gif: {
     position: "absolute", //así no afecta lo demás
     //top: 300, // ajustar según notch. Mas pequeno, más pegado al borde.
     //left: 200,
     //alignItems: "center",
-    marginTop: -80,       // baja el GIF respecto al texto
-    marginBottom: 40, // espacio entre GIF y botones
+    //marginTop: -80,       // baja el GIF respecto al texto
+    //marginBottom: 40, // espacio entre GIF y botones
+    top: 200,
     alignSelf: "center", // centra horizontalmente
     width: 300,
     height: 300,
+
+  },
+  buttonconfirm: {
+    position: "absolute",
+    bottom: 80,
+    left: 240, // izquierda
+  },
+
+  buttonback: {
+    position: "absolute",
+    bottom: 80, // más abajo o ajusta según quieras
+    right: 250, // derecha
   },
 });

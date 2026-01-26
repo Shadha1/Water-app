@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import React, { useEffect } from "react"; //Shadha
+import { useEffect } from "react"; //Shadha
 import { askNotificationPermission, setupNotificationHandler } from "./notifications";
 
 export default function RootLayout() {

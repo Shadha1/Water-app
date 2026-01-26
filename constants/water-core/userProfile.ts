@@ -24,7 +24,3 @@ export interface UserProfileInput {
 
 // Wasserbedarf
 //Noch zu trinken heute
-
-
-
-
