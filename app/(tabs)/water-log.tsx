@@ -52,7 +52,7 @@ export default function LogWater() {
           <AddWaterButton ml={250} selected={selectedMl === 250} onSnapshot={(next) => { setSelectedMl(250); setSnap(next); }} />
           <AddWaterButton ml={500} selected={selectedMl === 500} onSnapshot={(next) => { setSelectedMl(500); setSnap(next); }} />
 
-          <ResetWaterButton ml={0} onSnapshot={() => { }} />
+          <ResetWaterButton ml={0} selected={selectedMl === 0} onSnapshot={(next) => { setSelectedMl(0); setSnap(next); }} />
         </>
       )}
       <ConfirmButton onPress={() => router.replace("./home")} />

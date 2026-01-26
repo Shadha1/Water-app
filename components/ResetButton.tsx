@@ -11,6 +11,7 @@ type Props = {
   label?: string;
   disabled?: boolean;
   style?: ViewStyle;
+  selected?: boolean; //Mica
 };
 
 export default function ResetWaterButton({
@@ -20,6 +21,7 @@ export default function ResetWaterButton({
   label,
   disabled,
   style,
+  selected,
 }: Props) {
   const [busy, setBusy] = useState(false);
 
@@ -47,12 +49,13 @@ export default function ResetWaterButton({
       disabled={disabled || busy}
       style={({ pressed }) => [
         styles.button,
+        selected && styles.buttonSelected,//Mica
         style,
         (disabled || busy) && styles.buttonDisabled,
         pressed && !disabled && !busy && styles.buttonPressed,
       ]}
     >
-      <Text style={styles.text}>
+      <Text style={[styles.text, selected && styles.textSelected]}>
         {label ?? `Reset to ${ml} ml`}
         {busy ? " …" : ""}
       </Text>
@@ -83,5 +86,12 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 16,
     fontWeight: "600",
+  },
+  buttonSelected: {
+    backgroundColor: "#27598E",
+    borderColor: "#27598E",
+  },
+  textSelected: {
+    color: "#ffffff",
   },
 });
