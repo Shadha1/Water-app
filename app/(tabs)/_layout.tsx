@@ -4,23 +4,25 @@ import { Colors } from "@/constants/theme";
 import useUserData from "@/hooks/loadUser";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Tabs } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import {
-  initWater,
-  tryGetWaterSnapshot,
-} from "@/constants/water-core/waterService";
+import { initWater } from "@/constants/water-core/waterService";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { profile, loading } = useUserData();
+  const [isInitializing, setIsInitializing] = useState(false);
 
   useEffect(() => {
     if (loading) return;
     if (!profile) return;
-    if (tryGetWaterSnapshot()) return; // schon initialisiert
+    if (isInitializing) return;
 
-    initWater(profile).catch(console.error);
+    // ✅ Always reinitialize to load saved data from AsyncStorage
+    setIsInitializing(true);
+    initWater(profile)
+      .catch(console.error)
+      .finally(() => setIsInitializing(false));
   }, [loading, profile]);
 
   return (
@@ -32,7 +34,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({ color }: { color: string }) => (
@@ -40,26 +42,14 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          tabBarIcon: ({ color }: { color: string }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
-          ),
-        }}
-      />
+
+      {/**Hidden Screens */}
       <Tabs.Screen
         name="debug-water"
         options={{
-          /*title: "Debug Water",
-          tabBarIcon: ({ color }: { color: string }) => (
-            <IconSymbol size={28} name="gear" color={color} />
-          ),*/
           href: null,
         }}
       />
-      {/**Hidden Screens */}
       <Tabs.Screen
         name="settings"
         options={{

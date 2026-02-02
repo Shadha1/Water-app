@@ -1,6 +1,6 @@
 import BackButton from "@/components/BackButton";
 import { clearConsumedMl } from "@/constants/water-core/water-storage";
-//import { resetWater } from "@/constants/water-core/waterService"; 
+import { resetWater } from "@/constants/water-core/waterService";
 import useUserData from "@/hooks/loadUser";
 import { deleteUserProfile } from "@/hooks/userStorage";
 import { router } from "expo-router";
