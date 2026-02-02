@@ -18,7 +18,7 @@ export default function TabLayout() {
     if (!profile) return;
     if (isInitializing) return;
 
-    // ✅ Always reinitialize to load saved data from AsyncStorage
+    // Always reinitialize to load saved data from AsyncStorage
     setIsInitializing(true);
     initWater(profile)
       .catch(console.error)
