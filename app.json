@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "",
-    "slug": "my-app",
+    "name": "WaterMe",
+    "slug": "waterme",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/logo.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.justusahrens.waterme"
     },
     "web": {
       "output": "static",
@@ -41,6 +42,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9ce48f7a-2b9f-4506-9765-027319e81087"
+      }
+    },
+    "owner": "justusahrens"
   }
 }
