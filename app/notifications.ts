@@ -14,6 +14,18 @@ export function setupNotificationHandler() {
   });
 }
 
+export async function setupNotificationChannel() {
+  if (Device.osName === 'Android') {
+    await Notifications.setNotificationChannelAsync('reminders', {
+      name: 'Reminders',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+      sound: 'default', 
+    });
+  }
+}
+
 export async function askNotificationPermission() {
   if (!Device.isDevice) return false;
 
