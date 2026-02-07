@@ -1,16 +1,38 @@
 import GearButton from "@/components/GearButton";
 import useUserData from "@/hooks/loadUser";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 //import React from "react";
 import LogButton from "@/components/LogButton";
+import { WaterSnapshot } from "@/constants/water-core/water-tracker";
 import { tryGetWaterSnapshot } from "@/constants/water-core/waterService";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
 export default function Home() {
   const { profile, loading } = useUserData(); // get profile from hook
 
-  const snapshot = tryGetWaterSnapshot();
+  const [snapshot, setSnapshot] = useState<WaterSnapshot | null>(null);
+
+  // Load snapshot when screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      if (loading || !profile) return;
+
+      // Load the current snapshot from Water service
+      const updateSnapshot = () => {
+        const snap = tryGetWaterSnapshot();
+        if (snap) {
+          console.log("Snapshot loaded:", snap);
+          setSnapshot(snap);
+        } else {
+          // If snapshot not ready, try again after a short delay
+          setTimeout(updateSnapshot, 100);
+        }
+      };
+
+      updateSnapshot();
+    }, [loading, profile]),
+  );
 
   const progress =
     snapshot && snapshot.goalMl > 0
@@ -30,30 +52,33 @@ export default function Home() {
   if (loading || !profile) return null;
 
   const now = new Date();
-  const isEndOfDay = now.getHours() >= 23 && now.getMinutes() >= 59; // ejemplo: después de las 23:00
+  const isEndOfDay = now.getHours() >= 23 && now.getMinutes() >= 59; // Beispiel: nach 23:00
 
   const selectGif = () => {
     if (progress >= 1) {
-      return require("../../assets/images/gif_success.gif"); // meta alcanzada
+      return require("../../assets/images/gif_success.gif"); // Ziel erreicht
     }
     if (isEndOfDay) {
-      return require("../../assets/images/gif_fail.gif"); // fin del día sin meta
+      return require("../../assets/images/gif_fail.gif"); // Tagesende ohne Ziel
     }
-    return require("../../assets/images/gif_standard.gif"); // resto del día
+    return require("../../assets/images/gif_standard.gif"); // Rest des Tages
   };
-  //Wasser-text
+
+  // Wasser-Text
   const formatWaterAmount = (ml: number) => {
-    if (ml >= 1000) return `${(ml / 1000).toFixed(1)} L`; // litros con 1 decimal
-    return `${ml} ml`; // ml si es menos de 1L
+    if (ml >= 1000) return `${(ml / 1000).toFixed(2)} L`; // Liter mit 2 Dezimalstellen
+    return `${ml} ml`; // ml wenn weniger als 1L
   };
 
   const consumedText = snapshot
     ? `${formatWaterAmount(snapshot.consumedMl)} / ${formatWaterAmount(snapshot.goalMl)}`
     : `0 ml / 0 ml`;
-  // Mica's teil
+
+  // Micas Teil
+
   return (
     <View style={styles.container}>
-      {/* GIF a la izquierda */}
+      {/* GIF links */}
       <Image source={selectGif()} style={styles.gif} />
 
       <GearButton onPress={() => router.push("./settings")} />
@@ -61,13 +86,13 @@ export default function Home() {
 
       <Text style={styles.title}>Hello {profile?.name}</Text>
 
-
-      <View style={styles.barWrapper}>{/* Barra vertical + texto abajo */}
-        {/* Barra vertical a la derecha */}
+      <View style={styles.barWrapper}>
+        {/* Vertikale Leiste + Text darunter */}
+        {/* Vertikale Leiste rechts */}
         <View style={styles.barContainer}>
           <Animated.View style={[styles.barFill, { height: animatedHeight }]} />
         </View>
-        {/* Texto de progreso abajo de la barra */}
+        {/* Fortschrittstext unter der Leiste */}
         <Text style={styles.progressText}>{consumedText}</Text>
       </View>
     </View>
@@ -106,10 +131,9 @@ const styles = StyleSheet.create({
     fontFamily: "serif",
   },
   barWrapper: {
-    width: 60,           // espacio para la barra y texto
+    width: 60, // espacio para la barra y texto
     alignItems: "center", // centrar barra y texto
     marginLeft: 240,
-
   },
   barContainer: {
     width: 40,

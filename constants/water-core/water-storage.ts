@@ -3,8 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Storage-Key für den aktuellen Wasserverbrauch (ml)
 const KEY_CONSUMED_ML = "water:consumedMl";
 
-// Lädt den zuletzt gespeicherten Wasserverbrauch.
-// Gibt 0 zurück, wenn kein gültiger Wert vorhanden ist.
+// Lädt den letzen gespeicherten Wasserverbrauch (ml).
 export async function loadConsumedMl(): Promise<number> {
   const raw = await AsyncStorage.getItem(KEY_CONSUMED_ML);
 

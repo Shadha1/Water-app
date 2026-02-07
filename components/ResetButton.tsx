@@ -49,7 +49,7 @@ export default function ResetWaterButton({
       disabled={disabled || busy}
       style={({ pressed }) => [
         styles.button,
-        selected && styles.buttonSelected,//Mica
+        selected && styles.buttonSelected, //Mica
         style,
         (disabled || busy) && styles.buttonDisabled,
         pressed && !disabled && !busy && styles.buttonPressed,
