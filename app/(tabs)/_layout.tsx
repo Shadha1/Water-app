@@ -21,6 +21,7 @@ export default function TabLayout() {
     // Always reinitialize to load saved data from AsyncStorage
     setIsInitializing(true);
     initWater(profile)
+      //.then(() => updateHydrationNotifications()) // Update notifications after initializing water session
       .catch(console.error)
       .finally(() => setIsInitializing(false));
   }, [loading, profile]);
