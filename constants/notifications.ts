@@ -5,7 +5,7 @@ import * as Notifications from "expo-notifications";
 export function setupNotificationHandler() {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowAlert: false,
       shouldPlaySound: true,
       shouldSetBadge: false,
       shouldShowBanner: true,
@@ -74,7 +74,5 @@ export async function updateHydrationNotifications() {
     await scheduleHourlyNotification();
   }
   // else: Ziel erreicht -> keine Notifications
-  else{
-    clearNotifications;
-  }
+  
 }

@@ -1,4 +1,5 @@
 import BackButton from "@/components/BackButton";
+import { clearNotifications } from "@/constants/notifications";
 import { clearConsumedMl } from "@/constants/water-core/water-storage";
 import { resetWater } from "@/constants/water-core/waterService";
 import useUserData from "@/hooks/loadUser";
@@ -23,6 +24,7 @@ export default function SettingsScreen() {
           style: "destructive",
           onPress: async () => {
             try {
+              await clearNotifications;
               // 1. Clear consumed water from storage first
               await clearConsumedMl();
 

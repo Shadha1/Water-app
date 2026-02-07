@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 
-import { updateHydrationNotifications } from "@/app/notifications";
+import { updateHydrationNotifications } from "@/constants/notifications";
 import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
 import { drink, tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 
