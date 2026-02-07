@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 
+import { updateHydrationNotifications } from "@/constants/notifications";
 import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
 import { edit, tryGetWaterSnapshot } from "@/constants/water-core/waterService";
 
@@ -37,6 +38,7 @@ export default function ResetWaterButton({
       onSnapshot(next); // UI updaten
 
       // Trigger für Notifications
+      await updateHydrationNotifications();
       if (onAfterChange) await onAfterChange(next);
     } finally {
       setBusy(false);
@@ -49,7 +51,7 @@ export default function ResetWaterButton({
       disabled={disabled || busy}
       style={({ pressed }) => [
         styles.button,
-        selected && styles.buttonSelected,//Mica
+        selected && styles.buttonSelected, //Mica
         style,
         (disabled || busy) && styles.buttonDisabled,
         pressed && !disabled && !busy && styles.buttonPressed,

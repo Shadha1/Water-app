@@ -36,14 +36,16 @@ export const defaultForm: FormFields = {
 export function buildProfile(fields: FormFields): UserProfileInput | null {
   const { name, gender, ageYears, weightKg, activityLevel, climate } = fields;
 
-  if (!name || !gender || !ageYears || !weightKg) return null;
+  if (!name.trim() || !gender || !ageYears.trim() || !weightKg.trim())
+    return null;
 
   // converts strings to numbers
   const age = Number(ageYears);
   const weight = Number(weightKg);
-  //age and weight are valid positive numbers
+  //age and weight are valid positive numbers within reasonable human ranges
   if (!Number.isFinite(age) || !Number.isFinite(weight)) return null;
-  if (age <= 0 || weight <= 0) return null;
+  if (age < 10 || age > 100) return null;
+  if (weight < 20 || weight > 300) return null;
 
   return {
     name,

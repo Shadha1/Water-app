@@ -20,12 +20,11 @@ export default function LogWater() {
   const [error, setError] = useState<string | null>(null);
   const [selectedMl, setSelectedMl] = useState<number | null>(null);
 
-
   //  Use useFocusEffect to reset state when screen comes into focus
   useFocusEffect(
     useCallback(() => {
       setError(null);
-
+      setSelectedMl(null);
       if (loading) return;
 
       if (!profile) {
@@ -105,12 +104,47 @@ export default function LogWater() {
 
       {snap && (
         <>
-          <AddWaterButton ml={50} selected={selectedMl === 50} onSnapshot={(next) => { setSelectedMl(50); setSnap(next); }} />
-          <AddWaterButton ml={100} selected={selectedMl === 100} onSnapshot={(next) => { setSelectedMl(100); setSnap(next); }} />
-          <AddWaterButton ml={250} selected={selectedMl === 250} onSnapshot={(next) => { setSelectedMl(250); setSnap(next); }} />
-          <AddWaterButton ml={500} selected={selectedMl === 500} onSnapshot={(next) => { setSelectedMl(500); setSnap(next); }} />
+          <AddWaterButton
+            ml={50}
+            selected={selectedMl === 50}
+            onSnapshot={(next) => {
+              setSelectedMl(50);
+              setSnap(next);
+            }}
+          />
+          <AddWaterButton
+            ml={100}
+            selected={selectedMl === 100}
+            onSnapshot={(next) => {
+              setSelectedMl(100);
+              setSnap(next);
+            }}
+          />
+          <AddWaterButton
+            ml={250}
+            selected={selectedMl === 250}
+            onSnapshot={(next) => {
+              setSelectedMl(250);
+              setSnap(next);
+            }}
+          />
+          <AddWaterButton
+            ml={500}
+            selected={selectedMl === 500}
+            onSnapshot={(next) => {
+              setSelectedMl(500);
+              setSnap(next);
+            }}
+          />
 
-          <ResetWaterButton ml={0} selected={selectedMl === 0} onSnapshot={(next) => { setSelectedMl(0); setSnap(next); }} />
+          <ResetWaterButton
+            ml={0}
+            selected={selectedMl === 0}
+            onSnapshot={(next) => {
+              setSelectedMl(0);
+              setSnap(next);
+            }}
+          />
         </>
       )}
 

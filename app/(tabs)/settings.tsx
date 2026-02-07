@@ -6,6 +6,7 @@ import { deleteUserProfile } from "@/hooks/userStorage";
 import { router } from "expo-router";
 import React from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { clearNotifications } from "../../constants/notifications";
 
 export default function SettingsScreen() {
   const { profile } = useUserData();
@@ -23,6 +24,7 @@ export default function SettingsScreen() {
           style: "destructive",
           onPress: async () => {
             try {
+              await clearNotifications(); // Clear any pending notifications first
               // 1. Clear consumed water from storage first
               await clearConsumedMl();
 
