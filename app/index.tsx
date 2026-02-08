@@ -83,7 +83,7 @@ export default function Index() {
           keyboardType="numeric"
         />
 
-        <Text style={styles.label}>Weight</Text>
+        <Text style={styles.label}>Weight in kg</Text>
         <TextInput
           style={styles.input}
           value={form.weightKg}

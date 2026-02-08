@@ -25,6 +25,7 @@ export default function LogWater() {
   useFocusEffect(
     useCallback(() => {
       setError(null);
+      setSelectedMl(null);
 
       if (loading) return;
 

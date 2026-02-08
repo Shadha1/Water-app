@@ -39,7 +39,7 @@ export default function AddWaterButton({
       onSnapshot(next);             // UI updaten
 
       // Update Notification Settings
-      updateHydrationNotifications;
+      await updateHydrationNotifications();
       if (onAfterChange) await onAfterChange(next);
     } finally {
       setBusy(false);

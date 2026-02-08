@@ -24,7 +24,7 @@ export default function SettingsScreen() {
           style: "destructive",
           onPress: async () => {
             try {
-              await clearNotifications;
+              await clearNotifications();
               // 1. Clear consumed water from storage first
               await clearConsumedMl();
 

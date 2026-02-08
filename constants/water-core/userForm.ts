@@ -43,7 +43,8 @@ export function buildProfile(fields: FormFields): UserProfileInput | null {
   const weight = Number(weightKg);
   //age and weight are valid positive numbers
   if (!Number.isFinite(age) || !Number.isFinite(weight)) return null;
-  if (age <= 0 || weight <= 0) return null;
+  if (age <= 0 || age > 120) return null;
+  if (weight < 20 || weight > 400) return null;
 
   return {
     name,
