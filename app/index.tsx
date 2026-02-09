@@ -40,11 +40,6 @@ export default function Index() {
 
   if (loading) return null; // While the profile is loading, avoid rendering the form (prevents flicker)
 
-  /* No mostrar Header "index":
-  export const unstable_settings = {
-    headerShown: false, // nunca muestra el header
-  };*/
-
   // Mica's teil
   return (
     <View style={styles.container}>

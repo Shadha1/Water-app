@@ -4,7 +4,10 @@ import { Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 
 import { updateHydrationNotifications } from "@/constants/notifications";
 import type { WaterSnapshot } from "@/constants/water-core/water-tracker";
-import { drink, tryGetWaterSnapshot } from "@/constants/water-core/waterService";
+import {
+  drink,
+  tryGetWaterSnapshot,
+} from "@/constants/water-core/waterService";
 
 type Props = {
   ml: number;
@@ -36,7 +39,7 @@ export default function AddWaterButton({
     setBusy(true);
     try {
       const next = await drink(ml); // erhöht + speichert + Snapshot zurück
-      onSnapshot(next);             // UI updaten
+      onSnapshot(next); // UI updaten
 
       // Update Notification Settings
       await updateHydrationNotifications();
@@ -52,18 +55,13 @@ export default function AddWaterButton({
       disabled={disabled || busy}
       style={({ pressed }) => [
         styles.button,
-        selected && styles.buttonSelected,//Mica
+        selected && styles.buttonSelected, //Mica
         style,
         (disabled || busy) && styles.buttonDisabled,
         pressed && !disabled && !busy && styles.buttonPressed,
       ]}
     >
-      <Text
-        style={[
-          styles.text,
-          selected && styles.textSelected,
-        ]}
-      >
+      <Text style={[styles.text, selected && styles.textSelected]}>
         {label ?? `+ ${ml} ml`}
         {busy ? " …" : ""}
       </Text>
