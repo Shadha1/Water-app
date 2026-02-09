@@ -1,10 +1,10 @@
 
 
 import {
+  ActivityLevelValue,
+  AgeValue,
   calculateDailyWaterMl,
-  getActivityLevelValue,
-  getAgeValue,
-  getClimateValue,
+  ClimateValue,
   getGenderValue,
 } from '../water-core/water-formula';
 
@@ -26,47 +26,47 @@ describe('getGenderValue', () => {
 
 describe('getAgeValue', () => {
   test('17 → 100', () => {
-    expect(getAgeValue(17)).toBe(100);
+    expect(AgeValue(17)).toBe(100);
   });
 
   test('30 → 0', () => {
-    expect(getAgeValue(30)).toBe(0);
+    expect(AgeValue(30)).toBe(0);
   });
 
   test('31 → -100', () => {
-    expect(getAgeValue(31)).toBe(-100);
+    expect(AgeValue(31)).toBe(-100);
   });
 
   test('70 → -300', () => {
-    expect(getAgeValue(70)).toBe(-300);
+    expect(AgeValue(70)).toBe(-300);
   });
 });
 
 describe('getActivityLevelValue', () => {
   test('low → 0.3', () => {
-    expect(getActivityLevelValue('low')).toBe(0.3);
+    expect(ActivityLevelValue('low')).toBe(0.3);
   });
 
   test('moderate → 0.7', () => {
-    expect(getActivityLevelValue('moderate')).toBe(0.7);
+    expect(ActivityLevelValue('moderate')).toBe(0.7);
   });
 
   test('high → 1.0', () => {
-    expect(getActivityLevelValue('high')).toBe(1.0);
+    expect(ActivityLevelValue('high')).toBe(1.0);
   });
 });
 
 describe('getClimateValue', () => {
   test('cold → 0.5', () => {
-    expect(getClimateValue('cold')).toBe(0.5);
+    expect(ClimateValue('cold')).toBe(0.5);
   });
 
   test('temperate → 0.0', () => {
-    expect(getClimateValue('temperate')).toBe(0.0);
+    expect(ClimateValue('temperate')).toBe(0.0);
   });
 
   test('hot → 1.0', () => {
-    expect(getClimateValue('hot')).toBe(1.0);
+    expect(ClimateValue('hot')).toBe(1.0);
   });
 });
 
